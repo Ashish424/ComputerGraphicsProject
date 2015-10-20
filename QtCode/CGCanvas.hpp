@@ -8,6 +8,9 @@
 #include "glew.h"
 #include <QOpenGLWidget>
 #include <QTimer>
+#include "ApplicationLogic/World.hpp"
+#include "ApplicationLogic/Grid.hpp"
+
 
 class CGCanvas : public QOpenGLWidget
 {
@@ -30,7 +33,9 @@ private slots:
 private:
 
     QTimer* timer;
+    float timestep = 16;
     float slideAhead = 0;
+    TerrainDemo::World* world;
 
 
 

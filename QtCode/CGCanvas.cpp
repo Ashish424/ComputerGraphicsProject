@@ -17,14 +17,13 @@ CGCanvas::CGCanvas(QWidget *parent):QOpenGLWidget(parent)
     setFormat(glFormat);
     timer = new QTimer(this);
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(FixedUpdate()));
-    timer->start(16);
+    timer->start(timestep);
 }
 
 CGCanvas::~CGCanvas()
 {
+delete world;
 
-//    delete g1;
-//    delete terr;
 }
 
 void CGCanvas::resizeGL(int w, int h)
@@ -35,19 +34,17 @@ void CGCanvas::resizeGL(int w, int h)
 
 void CGCanvas::paintGL()
 {
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-//TODO delete these comments
-//    s1->Bind();
-//    s1->Update(*trans1,*c1);
-//    t1->Bind(0);
-//    m1->Draw();
-//    g1->draw();
+    glEnable(GL_DEPTH_TEST);
+// Accept fragment if it closer to the camera than the former one
+    glDepthFunc(GL_LESS);
 
 
 
 
+
+    world->update();
 
 }
 
@@ -73,7 +70,22 @@ void CGCanvas::initializeGL()
     qDebug() << "                    VERSION:      " << (const char*)glGetString(GL_VERSION);
     qDebug() << "                    GLSL VERSION: " << (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
     qDebug() << "endstuff\n";
-    glClearColor(0.0f,0.0f,1.0f,1.0f);
+    glClearColor(0.0f,0.0f,0.0f,1.0f);
+
+
+    world = new TerrainDemo::World(width(), height(), timestep);
+
+
+    glm::vec3 pos = glm::vec3(0.0,0.0,0.0);
+    glm::vec3 scale  = glm::vec3(1.0,1.0,1.0);
+    glm::vec3 rot = glm::vec3(0.0,0.0,0.0);
+
+    TransformData t1(pos,rot,scale);
+
+
+
+
+
 
 
 
@@ -84,9 +96,8 @@ void CGCanvas::initializeGL()
 void CGCanvas::FixedUpdate() {
 
 
-    slideAhead+=0.00016;
-//    this->trans1->getM_pos().x = sinf(slideAhead*50);
 
+    slideAhead+=0.00016;
     this->repaint();
 
 

@@ -10,12 +10,41 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
 
-set(SOURCE_FILES main.cpp Shader.cpp Shader.hpp)
-add_executable(CgProject ${SOURCE_FILES})
+set(SOURCE_FILES main.cpp)
+
+
+
+#Application logic files here
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/Shader.cpp ApplicationLogic/Shader.hpp)
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/GameObject.cpp ApplicationLogic/GameObject.hpp)
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/TransformData.cpp ApplicationLogic/TransformData.hpp)
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/Model.cpp ApplicationLogic/Model.hpp )
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/Model.cpp ApplicationLogic/Model.hpp )
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/Grid.cpp ApplicationLogic/Grid.hpp )
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/Vertices.hpp )
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/World.cpp ApplicationLogic/World.hpp )
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/MainCamera.cpp ApplicationLogic/MainCamera.hpp)
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/Light.cpp ApplicationLogic/Light.hpp )
+#Agents files
+set(SOURCE_FILES  ${SOURCE_FILES} ApplicationLogic/Agents/Agent.hpp)
+set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/Agents/CoastlineAgent.cpp ApplicationLogic/Agents/CoastlineAgent.hpp)
+
+
+#QtCode files here
+set(SOURCE_FILES  ${SOURCE_FILES}   QtCode/CGCanvas.cpp QtCode/CGCanvas.hpp )
+set(SOURCE_FILES  ${SOURCE_FILES}   QtCode/MainWindow.cpp QtCode/MainWindow.hpp )
+
+
 
 #subdirectories
 add_subdirectory("${PROJECT_SOURCE_DIR}/QtCode")
 add_subdirectory("${PROJECT_SOURCE_DIR}/ApplicationLogic")
+
+
+add_executable(CgProject ${SOURCE_FILES})
+
+
+
 
 
 

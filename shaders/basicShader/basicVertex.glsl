@@ -13,9 +13,7 @@ out VS_OUTPUT{
 
 void main() {
 
-     //TODO add tranfromations here
 
-//view*model*
      gl_Position = view*model*vec4(position,1.0);
     OUT.color = color;
 

@@ -34,6 +34,7 @@ namespace TerrainDemo {
 
 
     };
+    //TODO add support for materials
 
 
 }
