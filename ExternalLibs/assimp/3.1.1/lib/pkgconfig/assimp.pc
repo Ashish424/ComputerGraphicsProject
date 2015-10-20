@@ -1,0 +1,10 @@
+prefix=/usr/local/Cellar/assimp/3.1.1
+exec_prefix=/usr/local/Cellar/assimp/3.1.1/bin
+libdir=/usr/local/Cellar/assimp/3.1.1/lib
+includedir=/usr/local/Cellar/assimp/3.1.1/include/assimp
+
+Name: Assimp
+Description: Import various well-known 3D model formats in an uniform manner.
+Version: 3.1.1
+Libs: -L${libdir} -lassimp
+Cflags: -I${includedir}
