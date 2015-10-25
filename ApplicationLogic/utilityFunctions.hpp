@@ -1,0 +1,18 @@
+//
+// Created by Ashish Aapan on 23/10/15.
+//
+
+#ifndef CGPROJECT_UTILITYFUNCTIONS_H
+#define CGPROJECT_UTILITYFUNCTIONS_H
+
+
+
+
+
+
+
+
+
+
+
+#endif //CGPROJECT_UTILITYFUNCTIONS_H

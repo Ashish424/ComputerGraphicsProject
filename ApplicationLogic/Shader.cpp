@@ -7,7 +7,7 @@
 #include <fstream>
 #include <glm/gtx/string_cast.hpp>
 #include "Shader.hpp"
-
+#include <qdebug.h>
 
 
 
@@ -35,16 +35,13 @@ TerrainDemo::Shader::Shader(const std::vector<ShaderDefinition> & shaderIndexes,
 
 
     for(unsigned int i = 0;i<uniforms.size();i++) {
-//        printf("%s\n",uniforms[i].c_str());
         uniformsMap[uniforms[i]] = glGetUniformLocation(programID, uniforms[i].c_str());
-//        if(uniformsMap[uniforms[i]] == -1){
-//            printf("%u extraction error\n",uniformsMap[uniforms[i]]);
-//        }
+        if(uniformsMap[uniforms[i]] == -1){
+            qDebug("extraction error for uniform var");
+            printf("%u extraction error\n",uniformsMap[uniforms[i]]);
+        }
     }
-//    uniformsMap["view"] = glGetUniformLocation(programID, "view");
-//    printf("%u \n",uniformsMap["view"]);
-//    uniformsMap["model"] = glGetUniformLocation(programID, "model");
-//    printf("%u \n",uniformsMap["model"]);
+
 
 
 
@@ -165,6 +162,6 @@ void TerrainDemo::Shader::update(void (*update_fp)(TerrainDemo::MainCamera &, Te
 }
 
 GLuint TerrainDemo::Shader::getLocation(std::string &name) {
-//    printf("%u loc",uniformsMap[name]);
+
     return uniformsMap[name];
 }

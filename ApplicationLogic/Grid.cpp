@@ -1,10 +1,6 @@
 //
 // Created by Ashish Aapan on 13/10/15.
 //
-
-
-
-
 #include "Grid.hpp"
 #include "Vertices.hpp"
 #include "Shader.hpp"
@@ -93,7 +89,7 @@ namespace TerrainDemo {
 //    taking data from RAM to GPU
         glBufferData(GL_ARRAY_BUFFER,gridSize* sizeof(colors[0]),&colors[0],GL_STATIC_DRAW);
 
-//    tell we have attribute 2
+//    tell we have attribute 1
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1,4,GL_FLOAT,GL_FALSE,0,0);
 
@@ -114,7 +110,7 @@ namespace TerrainDemo {
     }
 
     Grid::~Grid(){
-            glDeleteVertexArrays(1,&vertexArrayObject);
+
 
     }
 

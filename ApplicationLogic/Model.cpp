@@ -14,6 +14,7 @@ namespace TerrainDemo {
     {}
 
     Model::~Model() {
+        glDeleteVertexArrays(1,&vertexArrayObject);
 
     }
 }

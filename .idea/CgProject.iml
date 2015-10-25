@@ -15,17 +15,22 @@
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Light.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/MainCamera.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/MainCamera.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Material.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Material.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Model.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Model.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Shader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Shader.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Terrain.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Terrain.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Textures.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Textures.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/TransformData.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/TransformData.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Vertices.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/World.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/World.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/utilityFunctions.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/QtCode/CGCanvas.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/QtCode/CGCanvas.hpp" isTestSource="false" />
@@ -33,6 +38,9 @@
       <sourceFolder url="file://$MODULE_DIR$/QtCode/MainWindow.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/QtCode/MainWindow.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Library/Caches/clion11/cmake/generated/cb364e04/cb364e04/Debug/CgProject_automoc.cpp">
+      <sourceFolder url="file://$USER_HOME$/Library/Caches/clion11/cmake/generated/cb364e04/cb364e04/Debug/CgProject_automoc.cpp" isTestSource="false" />
     </content>
     <content url="file://$USER_HOME$/Library/Caches/clion11/cmake/generated/cb364e04/cb364e04/Release/CgProject_automoc.cpp">
       <sourceFolder url="file://$USER_HOME$/Library/Caches/clion11/cmake/generated/cb364e04/cb364e04/Release/CgProject_automoc.cpp" isTestSource="false" />

@@ -28,11 +28,11 @@ namespace TerrainDemo {
         //game objects and stuff is dynamically allocated
         std::vector<Model* >objects;
         std::vector<Shader* >shaders;
-
+        //TODO add vector of lights here
         //imp always make sure NUM_SHADERS last element in this list
         enum{
             BasicShader,
-
+            TerrainShader,
             NUM_SHADERS
         };
 

@@ -7,27 +7,28 @@
 #include <glm/gtx/string_cast.hpp>
 namespace TerrainDemo {
 
-    MainCamera::MainCamera(const glm::vec3 &pos, float fov, float aspect, float zNear, float zFar, const glm::vec3 &up,
-                           const glm::vec3 &forward) :
-            m_position(pos), m_forward(forward), m_up(up) {
+    MainCamera::MainCamera(const glm::vec3 &pos, float fov, float aspect, float zNear, float zFar, const glm::vec3 &up, const glm::vec3 &forward, CameraType type) :
+    m_position(pos), m_forward(forward), m_up(up),type(type) {
 
         //default value of focus
         m_focusPoint = m_position + m_forward;
-        m_perspective = glm::perspective(fov, aspect, zNear, zFar);
+        if(type == CameraType::Perspective)m_perspective = glm::perspective(fov, aspect, zNear, zFar);
 
 
     }
 
     glm::mat4 MainCamera::GetViewProjection() const {
+        //get matrix based on type of camera
+        return (type == CameraType::Perspective)?m_perspective*glm::lookAt(m_position, m_focusPoint, m_up):
+           glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 4.0f) * glm::lookAt(m_position, m_focusPoint, m_up);
 
-//        return m_perspective * glm::lookAt(m_position, m_focusPoint, m_up);
 //    T left,
 //    T right,
 //    T bottom,
 //    T top,
 //    T zNear,
 //    T zFar
-        return glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 4.0f) * glm::lookAt(m_position, m_focusPoint, m_up);
+
     }
 
     void MainCamera::ApplyRotation(const glm::mat4 &transform) {

@@ -4,74 +4,78 @@
 
 #include "Terrain.hpp"
 #include <vector>
+#include "externalLibs/stbImageLoader/stb_image.h"
 #include "Shader.hpp"
 #include <QDebug>
+#include "SOIL.h"
+#include <opencv2/core/core.hpp>
+#include <opencv2/opencv.hpp>
+
 #include <glm/gtx/string_cast.hpp>
 //#define DEBUG_TERRAIN
 namespace TerrainDemo {
 
     Terrain::Terrain(const MainCamera *cam, const TransformData &transdata, const Shader *shader, unsigned int dimX,
                 unsigned int dimZ, double maxHeight, const std::string &heightImage) :
-    Model(cam,transdata,shader),corner(-0.5f,0.0f,-0.5f),dimX(dimX),dimZ(dimZ)
+    Model(cam,transdata,shader),corner(-0.5f,-0.2f,-0.5f),dimX(dimX),dimZ(dimZ)
     {
 
 
-
+        cv::Mat heightImg(loadImage(heightImage));
         //vector of vectors for terrain
         std::vector< std::vector< glm::vec3> > VertexData(dimZ,std:: vector<glm::vec3>(dimX));
         std::vector<std::vector< glm::vec2> > CoordsData(dimZ, std::vector<glm::vec2>(dimX));
 
-        //0.1 spacing for reading the coordinate data
-        double fTextureU = double(dimZ)*0.1f;
-        double fTextureV = double(dimX)*0.1f;
-        for(unsigned int i = 0;i< dimZ;i++) {
-            for (unsigned int j = 0; j < dimX; j++) {
+//
+//        double fTextureU = double(dimZ)*0.1f;
+//        double fTextureV = double(dimX)*0.1f;
+
+        cv::Size imgSize= heightImg.size();
+        int imgX = imgSize.width-1;
+        int imgZ = imgSize.height-1;
+        //texture is aligned as required.
+        for(GLuint i = 0;i< dimZ;i++) {
+            for (GLuint j = 0; j < dimX; j++) {
 
 
                 double scaleZ = i/(double)(dimZ -1);
                 double scaleX = j/(double)(dimX-1);
 
-                //TODO modify this value from image
-                double height = double(0.2);//maxHeight;//;//dimX*dimZ;
-#ifdef DEBUG_TERRAIN
-                qDebug("%f %f",corner.x+scaleX,corner.z+scaleZ);
-#endif
+                int imgPosX = (int)(scaleX*imgX);
+                int imgPosZ=  (int)(scaleZ*imgZ);
+                double height = maxHeight*heightImg.at<uchar>(imgPosZ,imgPosX)/(255.0f);
+                //TODO see terrain zero level?
                 VertexData[i][j] = glm::vec3(corner.x+scaleX, corner.y+height, corner.z+scaleZ);
-                //TODO invert these to match the direction
-                CoordsData[i][j] = glm::vec2(fTextureU*scaleX, fTextureV*scaleZ);
+                CoordsData[i][j] = glm::vec2(scaleX, scaleZ);
 
             }
 
         }
+
 
         //precalculate normals for each of the  triangle of each quad
         std::vector<std:: vector<glm::vec3> > vNormals[2];
             vNormals[0] = std::vector<std::vector<glm::vec3>>(dimZ - 1,std:: vector<glm::vec3>(dimX - 1));
             vNormals[1] = std::vector<std::vector<glm::vec3>>(dimZ - 1, std::vector<glm::vec3>(dimX - 1));
 
-        for(unsigned int i = 0;i<dimZ-1;i++)
-        {
-            for(unsigned int j = 0 ;j < dimX-1;j++)
-            {
+        for(GLuint i = 0;i<dimZ-1;i++) {
+            for (GLuint  j = 0; j < dimX - 1; j++) {
                 glm::vec3 vTriangle0[] =
                         {
                                 VertexData[i][j],
-                                VertexData[i+1][j],
-                                VertexData[i+1][j+1]
+                                VertexData[i + 1][j],
+                                VertexData[i + 1][j + 1]
                         };
-#ifdef DEBUG_TERRAIN
-                qDebug("triangle data %s %s %s",glm::to_string(VertexData[i][j]).c_str(),glm::to_string(VertexData[i+1][j]).c_str(),glm::to_string(VertexData[i+1][j+1]).c_str());
 
-#endif
                 glm::vec3 vTriangle1[] =
                         {
-                                VertexData[i+1][j+1],
-                                VertexData[i][j+1],
+                                VertexData[i + 1][j + 1],
+                                VertexData[i][j + 1],
                                 VertexData[i][j]
                         };
 
-                glm::vec3 vTriangleNorm0 = glm::cross(vTriangle0[0]-vTriangle0[1], vTriangle0[1]-vTriangle0[2]);
-                glm::vec3 vTriangleNorm1 = glm::cross(vTriangle1[0]-vTriangle1[1], vTriangle1[1]-vTriangle1[2]);
+                glm::vec3 vTriangleNorm0 = glm::cross(vTriangle0[0] - vTriangle0[1], vTriangle0[1] - vTriangle0[2]);
+                glm::vec3 vTriangleNorm1 = glm::cross(vTriangle1[0] - vTriangle1[1], vTriangle1[1] - vTriangle1[2]);
 
                 vNormals[0][i][j] = glm::normalize(vTriangleNorm0);
                 vNormals[1][i][j] = glm::normalize(vTriangleNorm1);
@@ -80,9 +84,9 @@ namespace TerrainDemo {
 
         std::vector< std::vector<glm::vec3> > FinalNormals = std::vector< std::vector<glm::vec3> >(dimZ, std::vector<glm::vec3>(dimX));
 
-        //calculating vextex normals
-        for(unsigned int i = 0;i<dimZ;i++) {
-            for (unsigned int j = 0; j < dimX; j++) {
+        //calculating vextex normals by averaging triangle normals
+        for(GLuint i = 0;i<dimZ;i++) {
+            for (GLuint j = 0; j < dimX; j++) {
 
                 glm::vec3 FinalNormal = glm::vec3(0.0f, 0.0f, 0.0f);
 
@@ -104,37 +108,30 @@ namespace TerrainDemo {
         }
 
         std::vector<GLuint> elementIndex;
-
-        //TODO CHECK THIS
         //elemnt array buffer
         GLuint  PrimitiveRestartIndex = dimZ*dimX;
-        for(unsigned int i=  0;i<dimZ-1; i++)
+        for(GLuint i=  0;i<dimZ-1; i++)
         {
-            for(unsigned int j = 0;j<dimX;j++)
+            for(GLuint j = 0;j<dimX;j++)
             {
-                for (int k = 0; k < 2; k++) {
-                    int iRow = i + (1 - k);
-                    int iIndex = iRow* dimX + j;
+                for (GLint k = 0; k < 2; k++) {
+                    GLint iRow = i + (1 - k);
+                    GLint iIndex = iRow* dimX + j;
                     elementIndex.push_back(iIndex);
                 }
             }
             // Restart triangle strips
             elementIndex.push_back(PrimitiveRestartIndex);
         }
-#ifdef DEBUG_TERRAIN
-        for(unsigned int i = 0;i<elementIndex.size();i++){
-            qDebug("value at index i is %u",elementIndex[i]);
-        }
-#endif
-        //linearlize vectors to send to OpenGL
-        std::vector<glm::vec3> linearVertexData;//linearVertexData.reserve(dimZ*dimX);
-        std::vector<glm::vec3> linearNormalData;//linearNormalData.reserve(dimZ*dimX);
-        std::vector<glm::vec2> linearTextcoord;//linearTextcoord.reserve(dimZ*dimX);
+
+        //Linearize vectors to send to OpenGL
+        std::vector<glm::vec3> linearVertexData;linearVertexData.reserve(dimZ*dimX);
+        std::vector<glm::vec3> linearNormalData;linearNormalData.reserve(dimZ*dimX);
+        std::vector<glm::vec2> linearTextcoord;linearTextcoord.reserve(dimZ*dimX);
 
 
-        for(unsigned int i = 0;i<dimZ;i++) {
-            for (unsigned int j = 0; j < dimX; j++) {
-
+        for(GLuint i = 0;i<dimZ;i++) {
+            for (GLuint j = 0; j < dimX; j++) {
                 linearVertexData.push_back(VertexData[i][j]);
                 linearNormalData.push_back(FinalNormals[i][j]);
                 linearTextcoord.push_back(CoordsData[i][j]);
@@ -146,15 +143,8 @@ namespace TerrainDemo {
         glGenVertexArrays(1,&vertexArrayObject);
         glBindVertexArray(vertexArrayObject);
 
-
-
         //generate required number of buffers for vertex positions
         glGenBuffers(NUM_BUFFERS, &vertexBuffers[0]);
-
-
-
-        //TODO fill element array buffer
-
 
         //element array buffer
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,vertexBuffers[ELEMENT_BUFFER]);
@@ -166,7 +156,6 @@ namespace TerrainDemo {
         glEnableVertexAttribArray(0);
         //describe attrib 0
         glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,0);
-
 
         glBindBuffer(GL_ARRAY_BUFFER,vertexBuffers[NORMAL]);
         glBufferData(GL_ARRAY_BUFFER,linearNormalData.size()* sizeof(linearNormalData[0]),&linearNormalData[0],GL_STATIC_DRAW);
@@ -182,20 +171,7 @@ namespace TerrainDemo {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         glBindVertexArray(0);
-
 
     }
 
@@ -209,15 +185,16 @@ namespace TerrainDemo {
 
 //        spTerrain.SetUniform("HeightmapScaleMatrix", glm::scale(glm::mat4(1.0), glm::vec3(vRenderScale)));
 
-        // Now we're ready to render - we are drawing set of triangle strips using one call, but we g otta enable primitive restart
         glBindVertexArray(vertexArrayObject);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        //TODO update shaders here
+//        this->shader->update(,this->current_cam);
         this->shader->Use();
-
         glEnable(GL_PRIMITIVE_RESTART);
         glPrimitiveRestartIndex(dimZ*dimX);
-
         //TODO replace this with size of vector
-        unsigned int  NumIndices = (dimZ-1)*dimX*2 + dimZ-1;
+        GLuint  NumIndices =  (dimZ-1)*dimX*2 + dimZ-1;
+
         glDrawElements(GL_TRIANGLE_STRIP, NumIndices, GL_UNSIGNED_INT, 0);
 
         glDisable(GL_PRIMITIVE_RESTART);
@@ -230,8 +207,50 @@ namespace TerrainDemo {
     }
 
 
+//TODO mipmaps generation
 
-    void Terrain::loadImage() {
+//TODO have multiple textures-shaders-model setup correct.
+    cv::Mat Terrain::loadImage(const std::string &filepath) {
+
+        GLint width;
+        GLint height;
+        GLubyte *ImageData;
+        GLint channels;
+
+        using namespace cv;
+        Mat imageHeight = Mat(imread(filepath.c_str(), CV_LOAD_IMAGE_GRAYSCALE));
+
+
+        ImageData = SOIL_load_image(filepath.c_str(),&width,&height,&channels,SOIL_LOAD_RGBA);
+
+#ifdef DEBUG_TERRAIN
+        qDebug("channles obtanied are %d",channels);
+
+        qDebug("dim valus are %u %u",dimZ,dimX);
+#endif
+        if(ImageData == NULL){
+            qDebug("error file not found");
+        }
+        //TODO error handling in gui if path not valid
+
+#ifdef DEBUG_TERRAIN
+        qDebug("channles obtanied are %d",channels);
+#endif
+        glGenTextures(1, &texture);
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,ImageData);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        //TODO free image
+        SOIL_free_image_data(ImageData);
+
+        return imageHeight;
 
     }
+
 }

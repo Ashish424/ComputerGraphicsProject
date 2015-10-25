@@ -20,11 +20,6 @@ set(SOURCE_FILES main.cpp)
 #set(SOURCE_FILES  ${SOURCE_FILES}   ApplicationLogic/Agents/CoastlineAgent.cpp ApplicationLogic/Agents/CoastlineAgent.hpp)
 #
 
-#QtCode files here
-set(SOURCE_FILES  ${SOURCE_FILES}   QtCode/CGCanvas.cpp QtCode/CGCanvas.hpp )
-set(SOURCE_FILES  ${SOURCE_FILES}   QtCode/MainWindow.cpp QtCode/MainWindow.hpp )
-
-
 
 #subdirectories
 add_subdirectory("${PROJECT_SOURCE_DIR}/QtCode")
@@ -45,6 +40,9 @@ add_executable(CgProject ${SOURCE_FILES})
 include_directories("${PROJECT_SOURCE_DIR}/externalLibs/glew/1.12.0/include/Gl")
 #include dirs for assimp
 include_directories("${PROJECT_SOURCE_DIR}/externalLibs/assimp/3.1.1/include")
+#include dir for soil
+#TODO cleanup stuff from soil
+include_directories("${PROJECT_SOURCE_DIR}/externalLibs/SOIL/src")
 
 
 
@@ -55,6 +53,7 @@ find_package( Qt5Core REQUIRED )
 find_package( Qt5Widgets REQUIRED )
 find_package( Qt5Gui REQUIRED )
 find_package(Qt5OpenGL)
+find_package(OpenCV)
 
 
 
@@ -66,9 +65,14 @@ qt5_use_modules(CgProject Core Widgets Gui )
 #linking glew,assimp and opengl libs
 target_link_libraries (CgProject
 
-        "${PROJECT_SOURCE_DIR}/externalLibs/glew/1.12.0/lib/libGLEW.a"
-        "${PROJECT_SOURCE_DIR}/externalLibs/assimp/3.1.1/lib/libassimp.3.1.1.dylib"
+        "${PROJECT_SOURCE_DIR}/ExternalLibs/glew/1.12.0/lib/libGLEW.a"
+
+
+        "${PROJECT_SOURCE_DIR}/ExternalLibs/assimp/3.1.1/lib/libassimp.3.1.1.dylib"
+        "${PROJECT_SOURCE_DIR}/ExternalLibs/SOIL/lib/libSOIL.dylib"
         ${OPENGL_LIBRARIES}
+        ${OpenCV_LIBRARIES}
+
 
 )
 

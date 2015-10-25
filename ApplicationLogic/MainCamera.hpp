@@ -9,15 +9,20 @@
 #include <glm/gtx/transform.hpp>
 #include "glew.h"
 
-//TODO add projection matrix different from view matrix
+//TODO camera handler for input
 namespace TerrainDemo {
+
+    enum class CameraType{
+
+        Perspective,Orthographic
+    };
 
 
     class MainCamera {
 
     public:
         MainCamera(const glm::vec3 &pos, float fov, float aspect, float zNear, float zFar, const glm::vec3 &up,
-                   const glm::vec3 &forward);
+                       const glm::vec3 &forward, CameraType type);
 
         glm::mat4 GetViewProjection() const;
 
@@ -46,9 +51,10 @@ namespace TerrainDemo {
         glm::vec3 m_position;
         glm::vec3 m_forward;
         glm::vec3 m_up;
-
+        CameraType  type;
 
     };
+
 }
 
 

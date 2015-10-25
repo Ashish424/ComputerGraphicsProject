@@ -4,8 +4,10 @@
 
 #include <glm/gtx/string_cast.hpp>
 #include "World.hpp"
-
+#include "Terrain.hpp"
 #include "Grid.hpp"
+#include <QDebug>
+//#define WORLD_DEBUG
 
 namespace TerrainDemo {
 
@@ -58,6 +60,18 @@ namespace TerrainDemo {
         shaders.push_back(new Shader(indexVec[BasicShader],uniformsVec[BasicShader]));
 
 
+        //shader1(Terrain shader)
+        indexVec[TerrainShader].push_back(ShaderDefinition(GL_VERTEX_SHADER,"./shaders/TerrainShader/TerrainVertex.glsl"));
+        indexVec[TerrainShader].push_back(ShaderDefinition(GL_FRAGMENT_SHADER,"./shaders/TerrainShader/TerrainFrag.glsl"));
+
+        //vector of uniforms for each shader in pair
+        uniformsVec[TerrainShader].push_back("model");
+        uniformsVec[TerrainShader].push_back("view");
+
+        //simple shader for testing
+        shaders.push_back(new Shader(indexVec[TerrainShader],uniformsVec[TerrainShader]));
+
+
 
 
 
@@ -74,7 +88,18 @@ namespace TerrainDemo {
 
 
     void World::putCam() {
-        this->cam = new MainCamera(glm::vec3(1.0f,1.0f,1.0f),70.0f,(float)width/height,1.0f,5,glm::vec3(0,1,0),glm::vec3(-3*1,-3*1,-3*1));
+//        MainCamera::MainCamera(const glm::vec3 &pos, float fov, float aspect, float zNear, float zFar, const glm::vec3 &up, const glm::vec3 &forward, CameraType type) :
+
+
+//
+//        this->cam = new MainCamera(glm::vec3(0.0f, 0.0f, 3.0f), 70.0f, (float) width / height, 1.0f, 5,
+//                                   glm::vec3(0, 1, 0), glm::vec3(0, 0, -3*1),CameraType::Perspective
+//        );
+
+//
+        this->cam = new MainCamera(glm::vec3(1.0f, 1.0f, 1.0f), 70.0f, (float) width / height, 1.0f, 5,
+                                   glm::vec3(0, 1, 0), glm::vec3(-3 * 1, -3 * 1, -3 * 1),CameraType::Perspective
+        );
 
     }
 
@@ -86,8 +111,14 @@ namespace TerrainDemo {
         glm::vec3 rot = glm::vec3(0.0, 0.0, 0.0);
 
         TransformData t1(pos, rot, scale);
+
         objects.push_back(
-                new Grid(this->cam, t1, this->shaders[BasicShader], 0.1f, 10, glm::vec4(0.0f, 0.5f, 0.5f, 1.0f)));
+                new Terrain(this->cam,t1,this->shaders[TerrainShader],512,512,1.0,"./Assets/testHeightmap.png"));
+        objects.push_back(
+                new Grid(this->cam, t1, this->shaders[BasicShader], 0.1f, 20, glm::vec4(1.0f, 0.5f, 0.5f, 1.0f)));
+
+
+
 
 
     }
@@ -95,8 +126,8 @@ namespace TerrainDemo {
     void World::updateShaders() {
 
 
-        shaders[BasicShader]->Use();
-        shaders[BasicShader]->update([](MainCamera &cam, Shader &shad) -> void {
+        this->shaders[BasicShader]->Use();
+        this->shaders[BasicShader]->update([](MainCamera &cam, Shader &shad) -> void {
             glm::mat4 getView = cam.GetViewProjection();
 
             std::string v("view");
@@ -112,11 +143,43 @@ namespace TerrainDemo {
 
             glm::mat4 model = t1.GetModel();
 
-//            printf("model matrix %s\n",glm::to_string(model).c_str());
+
             GLuint hold_view = shad.getLocation(v);
             GLuint hold_model = shad.getLocation(m);
 
 
+            glUniformMatrix4fv(hold_view, 1, GL_FALSE, &getView[0][0]);
+            glUniformMatrix4fv(hold_model, 1, GL_FALSE, &model[0][0]);
+
+
+        }, *this->cam);
+        this->shaders[TerrainShader]->Use();
+        this->shaders[TerrainShader]->update([](MainCamera &cam, Shader &shad) -> void {
+            static float rotation = 0.0f;
+            glm::mat4 getView = cam.GetViewProjection();
+
+            std::string v("view");
+            std::string m("model");
+
+
+
+            glm::vec3 pos = glm::vec3(0.0, 0.0, 0.0);
+            glm::vec3 scale = glm::vec3(1.0, 1.0, 1.0);
+            glm::vec3 rot = glm::vec3(0.0, rotation,0.0);
+            rotation+=0.001f;
+
+            TransformData t1(pos, rot, scale);
+
+
+            glm::mat4 model = t1.GetModel();
+
+
+            GLuint hold_view = shad.getLocation(v);
+            GLuint hold_model = shad.getLocation(m);
+#ifdef WORLD_DEBUG
+            qDebug("value of view is %u",hold_view);
+            qDebug("value of model is %u",hold_model);
+#endif
             glUniformMatrix4fv(hold_view, 1, GL_FALSE, &getView[0][0]);
             glUniformMatrix4fv(hold_model, 1, GL_FALSE, &model[0][0]);
 

@@ -20,11 +20,6 @@
  * with different tranformation matrix can be used by same shader
  * for different object
  *
-
-
-
-
-
 */
 namespace TerrainDemo {
 typedef std::pair<GLenum,std::string> ShaderDefinition;

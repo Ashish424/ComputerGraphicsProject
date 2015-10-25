@@ -5,6 +5,7 @@
 #ifndef CGPROJECT_TERRAIN_H
 #define CGPROJECT_TERRAIN_H
 
+#include <opencv2/core/mat.hpp>
 #include "Model.hpp"
 namespace TerrainDemo {
     class Terrain : public Model {
@@ -18,13 +19,13 @@ namespace TerrainDemo {
 
     private:
         const glm::vec3 corner;
-        unsigned int dimX,dimZ;
+        GLuint dimX,dimZ;
 
         virtual void DrawGameObject() override;
         virtual void InputUpdate() ;
         //helper method for loading image
         //TODO add this functionality
-        void loadImage();
+        cv::Mat loadImage(const std::string &filepath);
 
         enum{
             POSITION,
@@ -35,6 +36,10 @@ namespace TerrainDemo {
 
         };
         GLuint vertexBuffers[NUM_BUFFERS];
+        //TODO form texture class
+        GLuint texture;
+
+
     };
 }
 

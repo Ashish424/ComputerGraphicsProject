@@ -37,21 +37,20 @@ namespace TerrainDemo {
 
     private:
         //Pure Virtual Functions
-
         virtual void InputUpdate() = 0;
         virtual void DrawGameObject() = 0;
 
 
-
-
+    protected:
 
         //TODO cocos2d-x styled actions system for animations
         const AnimData *anim;
         //anim interface which points to the required implementaion
         //takes a pointer to Mesh to update it
         //data about orientation in 3d-space
-        TransformData transdata;
         const MainCamera *current_cam;
+        TransformData transdata;
+
 
 
 
