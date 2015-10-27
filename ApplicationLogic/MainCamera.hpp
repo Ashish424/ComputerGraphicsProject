@@ -7,7 +7,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
-#include "glew.h"
+#include <GL/glew.h>
 
 //TODO camera handler for input
 namespace TerrainDemo {

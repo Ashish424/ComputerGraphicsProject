@@ -26,9 +26,8 @@ namespace TerrainDemo {
         std::vector< std::vector< glm::vec3> > VertexData(dimZ,std:: vector<glm::vec3>(dimX));
         std::vector<std::vector< glm::vec2> > CoordsData(dimZ, std::vector<glm::vec2>(dimX));
 
-//
-//        double fTextureU = double(dimZ)*0.1f;
-//        double fTextureV = double(dimX)*0.1f;
+
+
 
         cv::Size imgSize= heightImg.size();
         int imgX = imgSize.width-1;

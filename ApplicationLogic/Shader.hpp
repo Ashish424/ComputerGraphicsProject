@@ -5,7 +5,7 @@
 #ifndef CGPROJECT_SHADER_H
 #define CGPROJECT_SHADER_H
 
-#include "glew.h"
+#include <GL/glew.h>
 #include <string>
 #include <vector>
 #include <map>
@@ -50,6 +50,9 @@ private:
 
 
 private:
+
+
+
     std::vector<GLuint> shaders;//shaders stored here
     std::map<std::string,GLuint> uniformsMap;//each Instance updates this guy accordingly
     GLuint programID;

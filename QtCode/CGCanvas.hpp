@@ -5,7 +5,7 @@
 #ifndef CGPROJECT_CGCANVAS_H
 #define CGPROJECT_CGCANVAS_H
 
-#include "glew.h"
+#include <GL/glew.h>
 #include <QOpenGLWidget>
 #include <QTimer>
 #include "ApplicationLogic/World.hpp"
@@ -38,7 +38,7 @@ private:
     TerrainDemo::World* world;
 
 
-
+  void setupGlew() const;
 };
 
 

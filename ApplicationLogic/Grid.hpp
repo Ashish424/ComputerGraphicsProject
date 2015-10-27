@@ -7,7 +7,7 @@
 
 
 //Class for Testing Grid
-#include "glew.h"
+#include <GL/glew.h>
 #include "Model.hpp"
 #include <glm/glm.hpp>
 namespace TerrainDemo {

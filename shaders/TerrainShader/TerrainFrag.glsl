@@ -120,17 +120,11 @@ vec3 calSpotLight(TerrainMaterial m,SpotLight s){
 
 float spotVal = abs(dot(normalize(IN.worldSpacePos-s.position),s.spotDirection));
 float cosComp = abs(cos(s.cutOffAngle));
+//comparing cosines
 if(spotVal < cosComp)spotVal = 0.0f;
-
 //float spotVal = dot() ;
 //diffuse calculation
 vec3 diffuse  =  vec3(texture(material.diffuseSampler,IN.TexCoord))*max(dot(IN.normals, -s.spotDirection), 0.0)*s.diffuse;
-
-
-
-
-
-
 return vec3(0.0,0.0,0.0);
 
 }

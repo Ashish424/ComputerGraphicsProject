@@ -13,13 +13,10 @@ MainWindow::~MainWindow() {
     glFormat.setProfile(QSurfaceFormat::CoreProfile);
     glFormat.setDefaultFormat(glFormat);
     glFormat.setSwapInterval(1);
-
-
 }
 
 MainWindow::MainWindow(QWidget *parent) {
     this->mainWindowGL = new CGCanvas(this);
     this->resize(640,480);
     this->setCentralWidget(mainWindowGL);
-
 }

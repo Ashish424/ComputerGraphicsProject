@@ -9,12 +9,6 @@
 #include <QOpenGLContext>
 CGCanvas::CGCanvas(QWidget *parent):QOpenGLWidget(parent)
 {
-    QSurfaceFormat glFormat;
-    glFormat.setVersion(4,1);
-    glFormat.setProfile(QSurfaceFormat::CoreProfile);
-    glFormat.setDefaultFormat(glFormat);
-    glFormat.setSwapInterval(1);
-    setFormat(glFormat);
     timer = new QTimer(this);
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(FixedUpdate()));
     timer->start(timestep);
@@ -53,11 +47,8 @@ void CGCanvas::initializeGL()
 {
 
 
-    glewExperimental = GL_TRUE;
-    if (glewInit() != GLEW_OK) {
+    setupGlew();
 
-        //        qWarning("Failed to initialize GLEW\n");
-    }
 
     glOrtho(0,width(),height(),0,-1,1);
     glLoadIdentity();
@@ -91,6 +82,13 @@ void CGCanvas::initializeGL()
 
 
 
+}
+void CGCanvas::setupGlew() const {
+    glewExperimental = GL_TRUE;
+    if (glewInit() != GLEW_OK) {
+
+        qWarning("Failed to initialize GLEW\n");
+    }
 }
 
 void CGCanvas::FixedUpdate() {

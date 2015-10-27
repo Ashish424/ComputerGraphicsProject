@@ -1,3 +1,4 @@
+#include <GL/glew.h>
 #include <iostream>
 #include <QApplication>
 #include <QSurfaceFormat>
@@ -5,6 +6,7 @@
 
 
 void setContext();
+
 int main(int argc,char *argv[]) {
     using namespace std;
 
@@ -12,7 +14,7 @@ int main(int argc,char *argv[]) {
   setContext();
 
 
-    MainWindow w;
+  MainWindow w;
     w.show();
 //    FindDialog* f1 = new FindDialog;
 //    f1->show();
@@ -34,3 +36,5 @@ void setContext(){
   QSurfaceFormat::setDefaultFormat(format);
 
 }
+
+

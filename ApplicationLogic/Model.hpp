@@ -6,7 +6,7 @@
 #define CGPROJECT_MODEL_H
 
 #include "GameObject.hpp"
-#include "glew.h"
+#include <GL/glew.h>
 #include <vector>
 namespace TerrainDemo {
     class Shader;

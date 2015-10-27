@@ -6,7 +6,7 @@
 #define CGPROJECT_TEXTURE_H
 
 #include <string>
-#include "glew.h"
+#include <GL/glew.h>
 
 namespace TerrainDemo {
 
