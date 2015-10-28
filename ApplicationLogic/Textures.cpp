@@ -39,7 +39,6 @@ namespace TerrainDemo {
 
 
     void Textures::Bind() {
-
         glActiveTexture(GL_TEXTURE0+unit);
         glBindTexture(GL_TEXTURE_2D,textureId);
 

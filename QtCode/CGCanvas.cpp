@@ -40,7 +40,7 @@ void CGCanvas::paintGL()
 
 
 
-    //world->update();
+    world->update();
 
 }
 
@@ -65,7 +65,7 @@ void CGCanvas::initializeGL()
     qDebug() << "endstuff\n";
     glClearColor(0.0f,0.0f,0.0f,1.0f);
 
-    //world = new TerrainDemo::World(width(), height(), timestep);
+    world = new TerrainDemo::World(width(), height(), timestep);
     glm::vec3 pos = glm::vec3(0.0,0.0,0.0);
     glm::vec3 scale  = glm::vec3(1.0,1.0,1.0);
     glm::vec3 rot = glm::vec3(0.0,0.0,0.0);
@@ -95,19 +95,22 @@ void CGCanvas::setupGlew() const {
 
 void CGCanvas::FixedUpdate() {
 
+
+
+
     tt+=0.01;
     for(int i=0; i<img.rows; ++i){
         for(int j=0; j<img.cols; ++j){
             double x = (double)j/((double)img.cols);
             double y = (double)i/((double)img.rows);
             //scale here multiply by a bigger no.
-            double n = pnoise.noise(2*x,2*y,tt);
+            double n = pnoise.noise(10*x,10*y,tt);
             img.at<uchar>(i,j) = (uchar) floor(n*255);
         }
     }
     cv::imshow("PerlinNoise",img);
-
     slideAhead+=0.00016;
+
     this->repaint();
 
 

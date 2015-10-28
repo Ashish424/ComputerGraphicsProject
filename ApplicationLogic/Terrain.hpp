@@ -14,12 +14,19 @@ namespace TerrainDemo {
     public:
         Terrain(const MainCamera *cam, const TransformData &transdata, const Shader *shader, unsigned int dimX,
                     unsigned int dimZ, double maxHeight, const std::string &heightImage);
+        void updateHeightMap(const cv::Mat & img);
 
 
 
     private:
         const glm::vec3 corner;
         GLuint dimX,dimZ;
+        GLdouble maxHeight;
+        cv::Mat heightMap;
+      //vector of vectors for terrain
+      std::vector< std::vector< glm::vec3> > VertexData;
+      std::vector< std::vector<glm::vec3> > FinalNormals;
+
 
         virtual void DrawGameObject() override;
         virtual void InputUpdate() ;
@@ -39,6 +46,10 @@ namespace TerrainDemo {
         //TODO form texture class
         GLuint texture;
 
+        //updates normals and heights of vertices
+        void updatePositionData(const cv::Mat &img);
+        void updateNormalData();
+        void linearizeData(std::vector<glm::vec3> &linearVertexData, std::vector<glm::vec3> &linearNormalData) const;
 
     };
 }
