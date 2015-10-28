@@ -8,6 +8,8 @@
 #include <GL/glew.h>
 #include <QOpenGLWidget>
 #include <QTimer>
+#include <opencv2/core/mat.hpp>
+#include <ApplicationLogic/utils/PerlinNoise.hpp>
 #include "ApplicationLogic/World.hpp"
 #include "ApplicationLogic/Grid.hpp"
 
@@ -32,6 +34,9 @@ private slots:
 
 private:
 
+    double tt;
+    cv::Mat img;
+    PerlinNoise pnoise;
     QTimer* timer;
     float timestep = 16;
     float slideAhead = 0;

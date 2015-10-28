@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.3)
 project(CgProject)
 #C++ flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -W -Wall -Wextra -pedantic")
-
+set(CMAKE_PREFIX_PATH /Users/tgz/Documents/Devlopment/Qt/5.5/clang_64)
 #enable mocing for Qt files
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

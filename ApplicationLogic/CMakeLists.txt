@@ -18,7 +18,7 @@ set(SOURCE_FILES ${SOURCE_FILES}
         ${CMAKE_CURRENT_SOURCE_DIR}/Terrain.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Terrain.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Material.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Material.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Textures.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Textures.hpp
-
+        ${CMAKE_CURRENT_SOURCE_DIR}/utils/PerlinNoise.cpp ${CMAKE_CURRENT_SOURCE_DIR}/utils/PerlinNoise.hpp
 
 
 
