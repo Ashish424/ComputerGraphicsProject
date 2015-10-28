@@ -54,7 +54,7 @@ namespace TerrainDemo {
         void updateNormalData();
         void linearizeData(std::vector<glm::vec3> &linearVertexData, std::vector<glm::vec3> &linearNormalData) const;
         //TODO temp var for perlin noise
-        PerlinNoise pnoise;
+        PerlinNoise pnoise[4];
 
 
 

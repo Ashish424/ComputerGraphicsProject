@@ -125,7 +125,11 @@ namespace TerrainDemo {
 
         glBindVertexArray(0);
         //TODO remove this from here
-        pnoise = PerlinNoise(time(NULL));
+        long long seed=time(NULL);
+        pnoise[0] = PerlinNoise(seed);
+        pnoise[1] = PerlinNoise(seed = (seed*33331 + 1001)*1000000007);
+        pnoise[2] = PerlinNoise(seed = (seed*33331 + 1001)*1000000007);
+        pnoise[3] = PerlinNoise(seed = (seed*33331 + 1001)*1000000007);
 
 
 
@@ -339,13 +343,16 @@ void Terrain::DrawGameObject() {
 
     void Terrain::updateHeightMap() {
         static float tt = 0.0;
-        tt+=0.01;
+        tt+=0.001;
         for(int i=0; i<heightMap.rows; ++i){
             for(int j=0; j<heightMap.cols; ++j){
                 double x = (double)j/((double)heightMap.cols);
                 double y = (double)i/((double)heightMap.rows);
 //scale here multiply by a bigger no.
-                double n = pnoise.noise(10*x,10*y,tt);
+                double n=0;
+                for(int k=1; k<=4; ++k) {
+                    n += (1.0/(k*k+0.3))*pnoise[k-1].noise((2*k*k - 1) * x, (2*k*k - 1) * y, tt);
+                }
                 heightMap.at<uchar>(i,j) = (uchar) floor(n*255);
             }
         }
