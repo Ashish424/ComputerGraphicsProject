@@ -8,7 +8,6 @@
 
 #include <vector>
 #include <opencv2/core/mat.hpp>
-#include <ApplicationLogic/utils/PerlinNoise.hpp>
 #include "GameObject.hpp"
 #include "Shader.hpp"
 #include "Model.hpp"
@@ -55,14 +54,6 @@ namespace TerrainDemo {
 
         void updateShaders();
         void updateObjects();
-
-        //TODO remove this perlin image
-        cv::Mat img;
-        cv::Mat updatedImage();
-        PerlinNoise pnoise;
-
-
-
 
 
 

@@ -72,24 +72,14 @@ void CGCanvas::initializeGL()
 
 
     TransformData t1(pos,rot,scale);
-    long long seed = (int) time(NULL);
-    pnoise[0] = PerlinNoise(seed);
-    seed = (seed*33331 + 1001)%1000000007;
-    pnoise[1] = PerlinNoise(seed);
-    seed = (seed*33331 + 1001)%1000000007;
-    pnoise[2] = PerlinNoise(seed);
-    seed = (seed*33331 + 1001)%1000000007;
-    pnoise[3] = PerlinNoise(seed);
+    pnoise = PerlinNoise(time(NULL));
     img = cv::Mat::zeros(300,300,CV_8UC1);
     tt=0.1;
     for(int i=0; i<img.rows; ++i){
         for(int j=0; j<img.cols; ++j){
             double x = (double)j/((double)img.cols);
             double y = (double)i/((double)img.rows);
-            long double n = 0;
-            for(int k=0; k<4;++k){
-                n += (1.0/(3*k+1.0))*pnoise[k].noise((2*k+7)*x,(2*k+7)*y,tt);
-            }
+            double n = pnoise.noise(x,y,tt);
             img.at<uchar>(i,j) = (uchar) floor(n*255);
         }
     }
@@ -108,16 +98,13 @@ void CGCanvas::FixedUpdate() {
 
 
 
-    tt+=0.1;
+    tt+=0.01;
     for(int i=0; i<img.rows; ++i){
         for(int j=0; j<img.cols; ++j){
             double x = (double)j/((double)img.cols);
             double y = (double)i/((double)img.rows);
             //scale here multiply by a bigger no.
-            long double n = 0;
-            for(int k=0; k<4;++k){
-                n += (1.0/(3*k+2.0))*pnoise[k].noise((3*k+2)*x,(3*k+2)*y,tt);
-            }
+            double n = pnoise.noise(10*x,10*y,tt);
             img.at<uchar>(i,j) = (uchar) floor(n*255);
         }
     }
