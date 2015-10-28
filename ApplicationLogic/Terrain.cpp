@@ -4,14 +4,15 @@
 
 #include "Terrain.hpp"
 #include <vector>
-#include "externalLibs/stbImageLoader/stb_image.h"
 #include "Shader.hpp"
 #include <QDebug>
 #include "SOIL.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
-
 #include <glm/gtx/string_cast.hpp>
+
+
+
 //#define DEBUG_TERRAIN
 namespace TerrainDemo {
 

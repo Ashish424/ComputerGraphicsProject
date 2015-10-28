@@ -37,7 +37,7 @@ TerrainDemo::Shader::Shader(const std::vector<ShaderDefinition> & shaderIndexes,
     for(unsigned int i = 0;i<uniforms.size();i++) {
         uniformsMap[uniforms[i]] = glGetUniformLocation(programID, uniforms[i].c_str());
         if(uniformsMap[uniforms[i]] == -1){
-            qDebug("extraction error for uniform var");
+            qDebug("extraction error for uniform var %s",uniforms[i].c_str());
             printf("%u extraction error\n",uniformsMap[uniforms[i]]);
         }
     }
@@ -147,7 +147,7 @@ void TerrainDemo::Shader::CheckShaderError(GLuint shader, GLuint flag, bool isPr
     }
 }
 
-//, const std::vector<TerrainDemo::Light> &
+//, const std::vector<TerrainDemo::Lights> &
 void TerrainDemo::Shader::update(void (*update_fp)(TerrainDemo::MainCamera &, TerrainDemo::Shader &),MainCamera &mainCamera){
 //TODO make sure this works
     //make sure this shader in use before playing with Uniforms

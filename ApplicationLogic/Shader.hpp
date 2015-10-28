@@ -25,7 +25,7 @@ namespace TerrainDemo {
 typedef std::pair<GLenum,std::string> ShaderDefinition;
 
 class Model;
-class Light;
+class Pointlight;
 
 class Shader {
 

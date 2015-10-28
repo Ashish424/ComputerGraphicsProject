@@ -14,7 +14,7 @@ set(SOURCE_FILES ${SOURCE_FILES}
         ${CMAKE_CURRENT_SOURCE_DIR}/Vertices.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World.cpp  ${CMAKE_CURRENT_SOURCE_DIR}/World.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/MainCamera.cpp ${CMAKE_CURRENT_SOURCE_DIR}/MainCamera.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/Light.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Light.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/PointLights.cpp ${CMAKE_CURRENT_SOURCE_DIR}/PointLights.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Terrain.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Terrain.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Material.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Material.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Textures.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Textures.hpp
