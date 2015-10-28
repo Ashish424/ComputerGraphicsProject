@@ -12,6 +12,7 @@ int dirList[8][2] = {{0,1}, {0,-1}, {1,0}, {-1,0}, {1,1}, {1,-1}, {-1,1}, {-1,-1
 CoastlineAgent::~CoastlineAgent() {
 
 }
+//
 
 void CoastlineAgent::doWork() {
     srandom(time(NULL));
@@ -59,6 +60,7 @@ void CoastlineAgent::doWork() {
         }
         child1->doWork();
         child2->doWork();
+        //TODO free child data in recursion here
     }
 }
 
