@@ -57,6 +57,11 @@ struct SpotLight {
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+    float constant;
+    float linear;
+    float quadratic;
+
 };
 
 //fill in worldspace data of light here
@@ -72,11 +77,20 @@ vec3 calDirLight(TerrainMaterial m,DirLight d);
 vec3 calSpotLight(TerrainMaterial m,SpotLight s);
 
 void main(){
+    //imp to init with 0
+    frag_colour = vec4(0.0,0.0,0.0,0.0);
 
 
 
 
-    frag_colour = texture(material.diffuseSampler,IN.TexCoord);
+    //TODO replace by loop for array
+    for(int i =0 ;i< 1;i++){
+
+           frag_colour+=vec4(calPointLight(material,pointLights[i]),0.0);
+    }
+
+
+//    frag_colour = texture(material.diffuseSampler,IN.TexCoord);
 
 
 }
@@ -115,16 +129,37 @@ return ambient+specular+diffuse;
 
 
 }
+
+//TODO add support for inner and outer cutoof in Spotlight
 vec3 calSpotLight(TerrainMaterial m,SpotLight s){
 
-
-float spotVal = abs(dot(normalize(IN.worldSpacePos-s.position),s.spotDirection));
+//TODO update this with ambient map
+vec3 ambient = s.ambient * vec3(texture(material.diffuseSampler,IN.TexCoord));
+vec3 lightDir = normalize(vec3(IN.worldSpacePos-s.position));
+float spotVal = abs(dot(lightDir,s.spotDirection));
+//TODO move this cos calucaltion directly to CPU
 float cosComp = abs(cos(s.cutOffAngle));
 //comparing cosines
-if(spotVal < cosComp)spotVal = 0.0f;
-//float spotVal = dot() ;
-//diffuse calculation
-vec3 diffuse  =  vec3(texture(material.diffuseSampler,IN.TexCoord))*max(dot(IN.normals, -s.spotDirection), 0.0)*s.diffuse;
-return vec3(0.0,0.0,0.0);
+
+if(spotVal < cosComp){
+    spotVal = 0.0f;
+    return ambient;
+
+}
+
+
+float distance  =  length(s.position-IN.worldSpacePos);
+float attenuation = 1.0f / (s.constant + s.linear * distance + s.quadratic * (distance * distance));
+
+
+
+vec3 diffuse  =  vec3(texture(material.diffuseSampler,IN.TexCoord))*max(dot(IN.normals, -lightDir), 0.0)*s.diffuse;
+vec3 reflectedDirection  =  reflect(lightDir,normalize(IN.normals));
+vec3 viewDirection = normalize(cameraPos- IN.worldSpacePos);
+float spec = pow(max(dot(reflectedDirection,viewDirection),0.0),material.shininess);
+
+vec3 specular = vec3(texture(material.specularSampler,IN.TexCoord))*pow(max(spec,0.0),m.shininess)*s.specular;
+//add atteunation of distance
+return ambient+(diffuse+specular)*attenuation;
 
 }

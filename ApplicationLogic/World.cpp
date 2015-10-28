@@ -7,6 +7,7 @@
 #include "Terrain.hpp"
 #include "Grid.hpp"
 #include <QDebug>
+#include "PointLights.hpp"
 //#define WORLD_DEBUG
 
 namespace TerrainDemo {
@@ -68,7 +69,23 @@ namespace TerrainDemo {
         uniformsVec[TerrainShader].push_back("model");
         uniformsVec[TerrainShader].push_back("view");
 
-        //simple shader for testing
+
+        //TODO light seperate
+      uniformsVec[TerrainShader].push_back("pointLights[0].position");
+      uniformsVec[TerrainShader].push_back("pointLights[0].diffuse");
+      uniformsVec[TerrainShader].push_back("pointLights[0].ambient");
+      uniformsVec[TerrainShader].push_back("pointLights[0].specular");
+      uniformsVec[TerrainShader].push_back("pointLights[0].constant");
+      uniformsVec[TerrainShader].push_back("pointLights[0].linear");
+      uniformsVec[TerrainShader].push_back("pointLights[0].quadratic");
+
+
+
+
+
+
+
+      //simple shader for testing
         shaders.push_back(new Shader(indexVec[TerrainShader],uniformsVec[TerrainShader]));
 
 
@@ -153,35 +170,81 @@ namespace TerrainDemo {
 
 
         }, *this->cam);
+
+
+
         this->shaders[TerrainShader]->Use();
         this->shaders[TerrainShader]->update([](MainCamera &cam, Shader &shad) -> void {
-            static float rotation = 0.0f;
-            glm::mat4 getView = cam.GetViewProjection();
-
-            std::string v("view");
-            std::string m("model");
 
 
+          //model-view information
+          static float rotation = 0.0f;
+          glm::mat4 getView = cam.GetViewProjection();
+          glm::vec3 pos = glm::vec3(0.0, 0.0, 0.0);
+          glm::vec3 scale = glm::vec3(1.0, 1.0, 1.0);
+          glm::vec3 rot = glm::vec3(0.0, rotation,0.0);
+          rotation+=0.001f;
+          TransformData t1(pos, rot, scale);
+          glm::mat4 model = t1.GetModel();
+          //lighting information
+          glm::vec3 lightPos(0.0,3.0,0.0);
+          glm::vec3 lightColor(1.0,sinf(glm::degrees(rotation)),1.0);
+          Pointlight p(&cam,t1,lightPos,lightColor,lightColor,lightColor);
 
-            glm::vec3 pos = glm::vec3(0.0, 0.0, 0.0);
-            glm::vec3 scale = glm::vec3(1.0, 1.0, 1.0);
-            glm::vec3 rot = glm::vec3(0.0, rotation,0.0);
-            rotation+=0.001f;
-
-            TransformData t1(pos, rot, scale);
 
 
-            glm::mat4 model = t1.GetModel();
 
 
-            GLuint hold_view = shad.getLocation(v);
-            GLuint hold_model = shad.getLocation(m);
+
+
+
+          //set uniform strings
+          std::string viewString("view");
+          std::string modelString("model");
+
+          //TODO seperate light vars from here(add to terrain shader itself
+          //set light uniform vars
+          //attenuation control
+          float constant;float linear;float quadratic;
+
+          std::string lightPosString("pointLights[0].position");
+          std::string lightDiffuseString("pointLights[0].diffuse");
+          std::string lightAmbientString("pointLights[0].ambient");
+          std::string lightSpecularString("pointLights[0].specular");
+          std::string lightConstantString("pointLights[0].constant");
+          std::string lightLinearString("pointLights[0].linear");
+          std::string lightQuadraticString("pointLights[0]quadrtic");
+          //fetch uniforms
+
+          GLuint hold_light_pos = shad.getLocation(lightPosString);
+          GLuint hold_light_diffuse = shad.getLocation(lightDiffuseString);
+          GLuint hold_light_ambient = shad.getLocation(lightAmbientString);
+          GLuint hold_light_specular = shad.getLocation(lightSpecularString);
+          GLuint hold_light_constant = shad.getLocation(lightConstantString);
+          GLuint hold_light_linear = shad.getLocation(lightLinearString);
+          GLuint hold_light_quadratic = shad.getLocation(lightQuadraticString);
+
+
+          //fetch uniforms
+          GLuint hold_view = shad.getLocation(viewString);
+          GLuint hold_model = shad.getLocation(modelString);
 #ifdef WORLD_DEBUG
-            qDebug("value of view is %u",hold_view);
+            qDebug("value of viewString is %u",hold_view);
             qDebug("value of model is %u",hold_model);
 #endif
-            glUniformMatrix4fv(hold_view, 1, GL_FALSE, &getView[0][0]);
-            glUniformMatrix4fv(hold_model, 1, GL_FALSE, &model[0][0]);
+
+            //update the unifotms
+          glUniformMatrix4fv(hold_view, 1, GL_FALSE, &getView[0][0]);
+          glUniformMatrix4fv(hold_model, 1, GL_FALSE, &model[0][0]);
+          //update light uniforms
+          glUniform3f(hold_light_pos,lightPos.x,lightPos.y,lightPos.z);
+          glUniform3f(hold_light_ambient,lightColor.r,lightColor.g,lightColor.b);
+          glUniform3f(hold_light_diffuse,lightColor.r,lightColor.g,lightColor.b);
+          glUniform3f(hold_light_specular,lightColor.r,lightColor.g,lightColor.b);
+
+          glUniform1f(hold_light_constant, p.getConstant());
+          glUniform1f(hold_light_linear, p.getLinear());
+          glUniform1f(hold_light_quadratic, p.getQuadratic());
 
 
         }, *this->cam);

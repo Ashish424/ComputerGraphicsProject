@@ -11,8 +11,8 @@
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/GameObject.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Grid.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Grid.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Light.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Light.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/PointLights.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/PointLights.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/MainCamera.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/MainCamera.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Material.cpp" isTestSource="false" />

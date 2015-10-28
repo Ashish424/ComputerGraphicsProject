@@ -63,23 +63,13 @@ void CGCanvas::initializeGL()
     qDebug() << "endstuff\n";
     glClearColor(0.0f,0.0f,0.0f,1.0f);
 
-
     world = new TerrainDemo::World(width(), height(), timestep);
-
-
     glm::vec3 pos = glm::vec3(0.0,0.0,0.0);
     glm::vec3 scale  = glm::vec3(1.0,1.0,1.0);
     glm::vec3 rot = glm::vec3(0.0,0.0,0.0);
 
+
     TransformData t1(pos,rot,scale);
-
-
-
-
-
-
-
-
 
 
 }
