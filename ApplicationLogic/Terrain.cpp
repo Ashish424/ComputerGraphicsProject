@@ -22,14 +22,18 @@ namespace TerrainDemo {
     FinalNormals(dimZ,std::vector<glm::vec3>(dimX))
     {
 
+        //TODO correct remove this
         heightMap = loadImage(heightImage);
-        std::vector<std::vector< glm::vec2> > CoordsData(dimZ, std::vector<glm::vec2>(dimX));
-
-
 
         cv::Size imgSize= heightMap.size();
         int imgX = imgSize.width-1;
         int imgZ = imgSize.height-1;
+
+
+        heightMap = cv::Mat::zeros(imgX,imgZ,CV_8UC1);
+        std::vector<std::vector< glm::vec2> > CoordsData(dimZ, std::vector<glm::vec2>(dimX));
+
+
 
         //fill the  position vector and normal data
         updatePositionData(heightMap);
@@ -120,6 +124,10 @@ namespace TerrainDemo {
 
 
         glBindVertexArray(0);
+        //TODO remove this from here
+        pnoise = PerlinNoise(time(NULL));
+
+
 
     }
 
@@ -136,24 +144,24 @@ void Terrain::DrawGameObject() {
 
 
     //update using perlin noise here
-//    updateHeightMap(img);
-//    updatePositionData(img);
-//    updateNormalData();
-//    std::vector<glm::vec3> linearVertexData;
-//    std::vector<glm::vec3> linearNormalData;
-//    linearizeData(linearVertexData,linearNormalData);
+    updateHeightMap();
+    updatePositionData(heightMap);
+    updateNormalData();
+    std::vector<glm::vec3> linearVertexData;
+    std::vector<glm::vec3> linearNormalData;
+    linearizeData(linearVertexData,linearNormalData);
 
 
-//    glBindBuffer(GL_ARRAY_BUFFER,vertexBuffers[POSITION]);
-//    glBufferSubData(GL_ARRAY_BUFFER,0, sizeof(linearVertexData[0])*linearVertexData.size(),&linearVertexData[0]);
-//    glBindBuffer(GL_ARRAY_BUFFER,vertexBuffers[NORMAL]);
-//    glBufferSubData(GL_ARRAY_BUFFER,0, sizeof(linearNormalData[0])*linearNormalData.size(),&linearNormalData[0]);
+    glBindBuffer(GL_ARRAY_BUFFER,vertexBuffers[POSITION]);
+    glBufferSubData(GL_ARRAY_BUFFER,0, sizeof(linearVertexData[0])*linearVertexData.size(),&linearVertexData[0]);
+    glBindBuffer(GL_ARRAY_BUFFER,vertexBuffers[NORMAL]);
+    glBufferSubData(GL_ARRAY_BUFFER,0, sizeof(linearNormalData[0])*linearNormalData.size(),&linearNormalData[0]);
 //
 
 
 
 
-    glBindVertexArray(vertexArrayObject);
+        glBindVertexArray(vertexArrayObject);
 
 
         //TODO update geometry here
@@ -329,8 +337,18 @@ void Terrain::DrawGameObject() {
         }
     }
 
-    void Terrain::updateHeightMap(const cv::Mat &img) {
-        this->heightMap = img;
+    void Terrain::updateHeightMap() {
+        static float tt = 0.0;
+        tt+=0.01;
+        for(int i=0; i<heightMap.rows; ++i){
+            for(int j=0; j<heightMap.cols; ++j){
+                double x = (double)j/((double)heightMap.cols);
+                double y = (double)i/((double)heightMap.rows);
+//scale here multiply by a bigger no.
+                double n = pnoise.noise(10*x,10*y,tt);
+                heightMap.at<uchar>(i,j) = (uchar) floor(n*255);
+            }
+        }
 
     }
 }

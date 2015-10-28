@@ -66,24 +66,8 @@ void CGCanvas::initializeGL()
     glClearColor(0.0f,0.0f,0.0f,1.0f);
 
     world = new TerrainDemo::World(width(), height(), timestep);
-    glm::vec3 pos = glm::vec3(0.0,0.0,0.0);
-    glm::vec3 scale  = glm::vec3(1.0,1.0,1.0);
-    glm::vec3 rot = glm::vec3(0.0,0.0,0.0);
 
-
-    TransformData t1(pos,rot,scale);
-    pnoise = PerlinNoise(time(NULL));
-    img = cv::Mat::zeros(300,300,CV_8UC1);
-    tt=0.1;
-    for(int i=0; i<img.rows; ++i){
-        for(int j=0; j<img.cols; ++j){
-            double x = (double)j/((double)img.cols);
-            double y = (double)i/((double)img.rows);
-            double n = pnoise.noise(x,y,tt);
-            img.at<uchar>(i,j) = (uchar) floor(n*255);
-        }
-    }
-    cv::imshow("PerlinNoise",img);
+//    cv::imshow("PerlinNoise",img);
 }
 void CGCanvas::setupGlew() const {
     glewExperimental = GL_TRUE;
@@ -97,18 +81,7 @@ void CGCanvas::FixedUpdate() {
 
 
 
-
-    tt+=0.01;
-    for(int i=0; i<img.rows; ++i){
-        for(int j=0; j<img.cols; ++j){
-            double x = (double)j/((double)img.cols);
-            double y = (double)i/((double)img.rows);
-            //scale here multiply by a bigger no.
-            double n = pnoise.noise(10*x,10*y,tt);
-            img.at<uchar>(i,j) = (uchar) floor(n*255);
-        }
-    }
-    cv::imshow("PerlinNoise",img);
+//    cv::imshow("PerlinNoise",img);
     slideAhead+=0.00016;
 
     this->repaint();

@@ -6,6 +6,7 @@
 #define CGPROJECT_TERRAIN_H
 
 #include <opencv2/core/mat.hpp>
+#include <ApplicationLogic/utils/PerlinNoise.hpp>
 #include "Model.hpp"
 namespace TerrainDemo {
     class Terrain : public Model {
@@ -14,7 +15,8 @@ namespace TerrainDemo {
     public:
         Terrain(const MainCamera *cam, const TransformData &transdata, const Shader *shader, unsigned int dimX,
                     unsigned int dimZ, double maxHeight, const std::string &heightImage);
-        void updateHeightMap(const cv::Mat & img);
+        //TODO remove refactor this
+        void updateHeightMap();
 
 
 
@@ -46,10 +48,15 @@ namespace TerrainDemo {
         //TODO form texture class
         GLuint texture;
 
+        //helper methods
         //updates normals and heights of vertices
         void updatePositionData(const cv::Mat &img);
         void updateNormalData();
         void linearizeData(std::vector<glm::vec3> &linearVertexData, std::vector<glm::vec3> &linearNormalData) const;
+        //TODO temp var for perlin noise
+        PerlinNoise pnoise;
+
+
 
     };
 }

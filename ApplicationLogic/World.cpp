@@ -20,8 +20,7 @@ namespace TerrainDemo {
         putshaders();
         putCam();
         putmodels();
-        //TODO remove this from here
-        pnoise = PerlinNoise(time(NULL));
+
 
     }
 
@@ -131,7 +130,7 @@ namespace TerrainDemo {
         TransformData t1(pos, rot, scale);
 
         objects.push_back(
-                new Terrain(this->cam,t1,this->shaders[TerrainShader],128,128,1.0,"./Assets/testHeightmap.png"));
+                new Terrain(this->cam,t1,this->shaders[TerrainShader],64,64,1.0,"./Assets/testHeightmap.png"));
         objects.push_back(
                 new Grid(this->cam, t1, this->shaders[BasicShader], 0.1f, 20, glm::vec4(1.0f, 0.5f, 0.5f, 1.0f)));
 
@@ -260,6 +259,9 @@ namespace TerrainDemo {
             if(objects.at(i))objects.at(i)->update();
         }
 
+
+
+
     }
 
 
@@ -268,20 +270,6 @@ namespace TerrainDemo {
         for(unsigned int i = 0;i<objects.size();i++)delete objects[i];
         for(unsigned int i = 0;i<shaders.size();i++)delete shaders[i];
 
-
-    }
-    cv::Mat World::updatedImage(){
-      static float tt = 0.0;
-      tt+=0.01;
-      for(int i=0; i<img.rows; ++i){
-        for(int j=0; j<img.cols; ++j){
-          double x = (double)j/((double)img.cols);
-          double y = (double)i/((double)img.rows);
-//scale here multiply by a bigger no.
-          double n = pnoise.noise(10*x,10*y,tt);
-          img.at<uchar>(i,j) = (uchar) floor(n*255);
-        }
-      }
 
     }
 
