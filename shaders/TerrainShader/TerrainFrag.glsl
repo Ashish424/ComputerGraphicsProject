@@ -9,7 +9,7 @@ vec3 worldSpacePos;
 
 
 
-#define NR_POINT_LIGHTS 4
+#define NR_POINT_LIGHTS 1
 #define NR_DIRECTION_LIGHTS 4
 #define NR_SPOT_LIGHTS 4
 
@@ -84,7 +84,7 @@ void main(){
 
 
     //TODO replace by loop for array
-    for(int i =0 ;i< 1;i++){
+    for(int i =0 ;i< NR_POINT_LIGHTS;i++){
 
            frag_colour+=vec4(calPointLight(material,pointLights[i]),0.0);
     }
