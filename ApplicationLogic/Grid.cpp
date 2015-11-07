@@ -5,9 +5,14 @@
 #include "Vertices.hpp"
 #include "Shader.hpp"
 namespace TerrainDemo {
-    Grid::Grid(const MainCamera *cam, const TransformData &transdata, const Shader *shader, GLfloat scale, GLuint size,
-                   glm::vec4 color) :
-            Model(cam, transdata, shader) {
+    Grid::Grid(const MainCamera *cam,
+                 const TransformData &transdata,
+                  Shader *shader,
+                 GLfloat scale,
+                 GLuint size,
+                 glm::vec4 color,
+                 std::function<void(Grid *)> updateGridShader) :
+            Model(cam, transdata, shader),updateGridShader(updateGridShader) {
 
 
         std::vector<VertexPosColor>  vertices;
@@ -120,6 +125,7 @@ namespace TerrainDemo {
 
         glBindVertexArray(vertexArrayObject);
         this->shader->Use();
+        updateGridShader(this);
         glDrawArrays(GL_LINES,0,gridSize);
 
         glBindVertexArray(0);

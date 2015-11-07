@@ -7,14 +7,21 @@
 
 #include <opencv2/core/mat.hpp>
 #include <ApplicationLogic/utils/PerlinNoise.hpp>
+#include <functional>
 #include "Model.hpp"
 namespace TerrainDemo {
     class Terrain : public Model {
 
 
     public:
-        Terrain(const MainCamera *cam, const TransformData &transdata, const Shader *shader, unsigned int dimX,
-                    unsigned int dimZ, double maxHeight, const std::string &heightImage);
+        Terrain(const MainCamera *cam,
+                           const TransformData &transdata,
+                           Shader *shader,
+                           unsigned int dimX,
+                           unsigned int dimZ,
+                           double maxHeight,
+                           const std::string &heightImage,
+                           std::function<void(Terrain *)> updateTerrainShader);
         //TODO remove refactor this
         void updateHeightMap();
 
@@ -47,8 +54,10 @@ namespace TerrainDemo {
         GLuint vertexBuffers[NUM_BUFFERS];
         //TODO form texture class
         GLuint texture;
+        std::function<void(Terrain*)> updateTerrainShader;
 
         //helper methods
+
         //updates normals and heights of vertices
         void updatePositionData(const cv::Mat &img);
         void updateNormalData();
@@ -56,7 +65,8 @@ namespace TerrainDemo {
         //TODO temp var for perlin noise
         PerlinNoise pnoise[4];
 
-
+        //helper method for instances
+        friend void updateTerrainShader1(Terrain* terr);
 
     };
 }

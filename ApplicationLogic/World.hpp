@@ -54,6 +54,8 @@ namespace TerrainDemo {
 
         void updateShaders();
         void updateObjects();
+        void updateCamera();
+
 
 
 

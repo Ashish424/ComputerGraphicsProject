@@ -9,7 +9,7 @@ namespace TerrainDemo {
 
 
 
-    Model::Model(const TerrainDemo::MainCamera *cam, const TransformData &transdata,const Shader * shader):
+    Model::Model(const TerrainDemo::MainCamera *cam, const TransformData &transdata, Shader *shader):
     GameObject(cam,transdata),shader(shader)
     {}
 

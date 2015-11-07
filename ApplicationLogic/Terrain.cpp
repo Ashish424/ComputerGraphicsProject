@@ -16,10 +16,16 @@
 //#define DEBUG_TERRAIN
 namespace TerrainDemo {
 
-    Terrain::Terrain(const MainCamera *cam, const TransformData &transdata, const Shader *shader, unsigned int dimX,
-                unsigned int dimZ, double maxHeight, const std::string &heightImage) :
+    Terrain::Terrain(const MainCamera *cam,
+                       const TransformData &transdata,
+                       Shader *shader,
+                       unsigned int dimX,
+                       unsigned int dimZ,
+                       double maxHeight,
+                       const std::string &heightImage,
+                       std::function<void(Terrain *)> updateTerrainShader) :
     Model(cam,transdata,shader),corner(-0.5f,-0.2f,-0.5f),dimX(dimX),dimZ(dimZ),maxHeight(maxHeight),VertexData(dimZ,std::vector<glm::vec3>(dimX)),
-    FinalNormals(dimZ,std::vector<glm::vec3>(dimX))
+    FinalNormals(dimZ,std::vector<glm::vec3>(dimX)),updateTerrainShader(updateTerrainShader)
     {
 
         //TODO correct remove this
@@ -180,8 +186,9 @@ void Terrain::DrawGameObject() {
 
 
         //TODO update shaders here
-//        this->shader->update(,this->current_cam);
         this->shader->Use();
+        this->updateTerrainShader(this);
+
         glEnable(GL_PRIMITIVE_RESTART);
         glPrimitiveRestartIndex(dimZ*dimX);
         //TODO replace this with size of vector

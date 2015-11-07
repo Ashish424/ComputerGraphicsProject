@@ -40,7 +40,10 @@ namespace TerrainDemo {
         virtual void InputUpdate() = 0;
         virtual void DrawGameObject() = 0;
 
-
+    public:
+        const TransformData &getTransdata() const {
+            return transdata;
+        }
     protected:
 
         //TODO cocos2d-x styled actions system for animations

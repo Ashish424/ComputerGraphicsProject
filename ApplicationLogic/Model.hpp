@@ -13,7 +13,7 @@ namespace TerrainDemo {
     class Model :public GameObject {
 
     public:
-        Model(const MainCamera *cam,const TransformData & transdata,const Shader * shader);
+        Model(const MainCamera *cam, const TransformData &transdata, Shader *shader);
 
 
 
@@ -24,12 +24,12 @@ namespace TerrainDemo {
 
     protected:
     public:
-        void setShader(const Shader *shader) {
+        void setShader(Shader *shader) {
             Model::shader = shader;
         }
 
     protected:
-        const Shader* shader;
+        Shader* shader;
         GLuint vertexArrayObject;
 
 
