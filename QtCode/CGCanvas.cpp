@@ -4,11 +4,17 @@
 
 #include "CGCanvas.hpp"
 #include <QDebug>
-#include <glm/glm.hpp>
-#include <QSurfaceFormat>
-#include <QOpenGLContext>
-#include <opencv2/highgui.hpp>
 
+#include <opencv2/highgui.hpp>
+//TODO diable these debug macros
+#define DEBUG_CANVAS
+
+
+
+
+#ifdef DEBUG_CANVAS
+#include <QOpenGLContext>
+#endif
 CGCanvas::CGCanvas(QWidget *parent):QOpenGLWidget(parent)
 {
     timer = new QTimer(this);
@@ -18,8 +24,7 @@ CGCanvas::CGCanvas(QWidget *parent):QOpenGLWidget(parent)
 
 CGCanvas::~CGCanvas()
 {
-delete world;
-
+    delete world;
 }
 
 void CGCanvas::resizeGL(int w, int h)
@@ -55,6 +60,7 @@ void CGCanvas::initializeGL()
     glOrtho(0,width(),height(),0,-1,1);
     glLoadIdentity();
 
+#ifdef DEBUG_CANVAS
     QOpenGLContext *cont = context();
     qDebug() << "Context valid: " << cont->isValid();
     qDebug() << "Really used OpenGl: " << cont->format().majorVersion() << "." << cont->format().minorVersion();
@@ -63,6 +69,7 @@ void CGCanvas::initializeGL()
     qDebug() << "                    VERSION:      " << (const char*)glGetString(GL_VERSION);
     qDebug() << "                    GLSL VERSION: " << (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
     qDebug() << "endstuff\n";
+#endif
     glClearColor(0.0f,0.0f,0.0f,1.0f);
 
     world = new TerrainDemo::World(width(), height(), timestep);
@@ -94,7 +101,6 @@ void CGCanvas::setupGlew() const {
 }
 
 void CGCanvas::FixedUpdate() {
-
 
 
 

@@ -29,7 +29,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/QtCode")
 add_subdirectory("${PROJECT_SOURCE_DIR}/ApplicationLogic")
 add_subdirectory("${PROJECT_SOURCE_DIR}/ApplicationLogic/Agents")
 add_subdirectory("${PROJECT_SOURCE_DIR}/ApplicationLogic/utils")
-
+add_subdirectory("${PROJECT_SOURCE_DIR}/ApplicationLogic/L-Systems")
 
 
 #include dir thank you El-Captain

@@ -9,12 +9,15 @@
 class TransformData {
 
 
-    //TODO transform data copy constructor required by game object
+
 
 
 
 public:
     TransformData(const glm::vec3& pos = glm::vec3(),const glm::vec3& rot = glm::vec3(),const glm::vec3& scale = glm::vec3(1.0,1.0,1.0));
+    TransformData(const TransformData & other);
+    TransformData & operator=(TransformData other);
+    void swap(TransformData & other);
     ~TransformData();
     glm::mat4 GetModel()const;
 

@@ -1,6 +1,7 @@
 //
 // Created by Ashish Aapan on 07/11/15.
 //
+#include <glm/gtx/string_cast.hpp>
 #include "utilityFunctions.hpp"
 
 #include "ApplicationLogic/Shader.hpp"

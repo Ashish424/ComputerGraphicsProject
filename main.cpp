@@ -7,18 +7,22 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include "QtCode/MainWindow.hpp"
-
+#include "ApplicationLogic/L-Systems/LSystem.hpp"
+#include "ApplicationLogic/L-Systems/Turtle.hpp"
 
 void setContext();
 void mountainSpace();
+void TestingLsys();
 
 int main(int argc,char *argv[]) {
     using namespace std;
 
     QApplication app(argc, argv);
     setContext();
+    TestingLsys();
 
-    mountainSpace();
+
+//    mountainSpace();
 
     MainWindow w;
     w.show();
@@ -52,4 +56,19 @@ void mountainSpace(){
     MountainAgent::makeMountains(image, 255);
     cv::imshow("Mountain Random",image);
     return;
+}
+
+void TestingLsys(){
+
+    TerrainDemo::Rules r1;
+    r1["F"] = "F[-F]F[+F][F]";
+
+    TerrainDemo::LSystem l1("F",r1);
+    std::shared_ptr<std::string> gen = l1.getLSysString(1,false);
+    printf("the generated string is  %s\n",gen->c_str());
+
+    TerrainDemo::Turtle t1(gen,glm::vec4(0.0,0.0,0.0,1.0),glm::vec3(0.0,1.0,0.0));
+
+
+
 }

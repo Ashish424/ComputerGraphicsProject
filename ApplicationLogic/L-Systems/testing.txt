@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <utility>
+#include <vector>
+#include <string>
+
+
+//TODO add XML support for saving Plants(see void realms for xml parsers)
+//CGproject for L-systems
+//=>L-systems =>Use factory pattern for plants
+//=>Use shadred pointer shared_ptr<> for l-systems dynamically allocated strings
+//=>Use factory Pattern for generation of different Plants
+//=>use a vector of std::pair for stroing rules mapping
+
+//rule for l-systems
+typedef std::pair<char,std::string> Rule;
+class Lsystem{
+
+
+public void parse(enum parseHint);
+public virtual void generate();
+std::vector<Rule> rules;
+GLuint levels;
+};
+
+LSystem::Generate(enum genhint){
+<shared::ptr> to_string_of_generated_l_sys = map(genhint,levels);//get a parsing function based on the enum hint
+	
+	
+	
+}
+
+class Turtle{
+	
+	
+	public:
+		//thickness for drawing plants
+		void setThickness();
+		
+	
+	
+	private:
+	glm::mat4 datamatrix//desrcibe the rotation,position of turtle
+	
+		
+};
+	
+

@@ -46,6 +46,7 @@ void MountainAgent::makeMountains(cv::Mat &image, uchar color) {
         for(int j=0; j< image.cols; j++){
             dis.at<float>(i, j) /= max_dis;
             dis.at<float>(i, j) = 1 - dis.at<float>(i, j);
+            //TODO have different falloff functions here
             image.at<uchar>(i, j) = (uchar) (255 * dis.at<float>(i, j));
             float ans = image.at<uchar>(i,j);
             ans /= 300;
