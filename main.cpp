@@ -24,7 +24,7 @@ int main(int argc,char *argv[]) {
     setContext();
     TestingLsys();
 
-    demoIslandSpace();
+    //demoIslandSpace();
     //mountainSpace();
 
     MainWindow w;
@@ -88,7 +88,7 @@ void demoIslandSpace(){
     int m_height = 4096;
     int m_width = 4096;
     cv::Mat im = cv::Mat::zeros(4096,4096,CV_8UC1);
-    CoastlineAgent *agent = new CoastlineAgent(1024*2048, &img, m_width, m_height, 0, m_width - 1, 0, m_height - 1);
+    CoastlineAgent *agent = new CoastlineAgent(m_width*m_height*2, &img, m_width, m_height, 0, m_width - 1, 0, m_height - 1);
     std::memset(img.imageIntData, 0, sizeof(int)*m_height*m_width);
     agent->doWork();
     for(int i=0; i<1024; i++){

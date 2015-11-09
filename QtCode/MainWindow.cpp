@@ -6,6 +6,8 @@
 #include "CGCanvas.hpp"
 #include <QOpenGLContext>
 #include <QStackedWidget>
+#include <qpushbutton.h>
+#include <QKeyEvent>
 //TODO remove this header
 #include "ApplicationLogic/temp/TempCanvas.hpp"
 
@@ -38,7 +40,11 @@ MainWindow::MainWindow(QWidget *parent) {
     OperationStackedWidget->addWidget(mainWindowGL);
     OperationStackedWidget->addWidget(tempWindowGL);
 
+}
 
-
-
+void MainWindow::keyPressEvent(QKeyEvent *keyEvent) {
+    QWidget::keyPressEvent(keyEvent);
+    if(keyEvent->key() == Qt::Key_Shift){
+        OperationStackedWidget->setCurrentIndex(1-OperationStackedWidget->currentIndex());
+    }
 }

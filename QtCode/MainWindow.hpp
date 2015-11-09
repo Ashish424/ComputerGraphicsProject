@@ -12,7 +12,9 @@ class CGCanvas;
 class TempCanvas;
 class QStackedWidget;
 class MainWindow:public QMainWindow {
-    Q_OBJECT
+
+    void keyPressEvent(QKeyEvent *keyEvent) override;
+
 public:
     explicit MainWindow(QWidget *parent=nullptr);
 
@@ -23,6 +25,7 @@ public:
     TempCanvas *tempWindowGL;
   //selects the mainWindow or tempwindow
     int SetCurrent;
+
 };
 
 
