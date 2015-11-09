@@ -55,7 +55,7 @@ void MountainAgent::makeMountains(cv::Mat &image, uchar color) {
             for(int k=1; k<4; k++){
                 float f =  k*k + 10;
                 float a = 2*k*k + 3;
-                ans += 1/f*n[k-1].noise(x*a,y*a,0.8);
+                ans += 1/f*n[0].noise(x*a,y*a,0.8);
             }
             ans = std::min(ans,1.0f);
             ans *= 255;
@@ -77,7 +77,7 @@ void MountainAgent::doWork() {
         if(chngCount==0){
             float d = random()%100+1;
             direction += M_PI/8 - (addDirection * d)/ 100;
-            std::cerr<< d <<"\n";
+            //std::cerr<< d <<"\n";
             chngCount = changeDirc;
         }
 

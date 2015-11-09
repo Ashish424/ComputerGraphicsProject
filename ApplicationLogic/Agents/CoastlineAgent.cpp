@@ -41,7 +41,7 @@ void CoastlineAgent::doWork() {
                 }
             }
             if(score > 1.7e3){
-                img->img[mxx][mxy]=111;
+                img->imageIntData[mxx][mxy]=111;
             }
             point = choosePoint(dir);
             tokens--;
@@ -61,6 +61,8 @@ void CoastlineAgent::doWork() {
         child1->doWork();
         child2->doWork();
         //TODO free child data in recursion here
+        delete child1;
+        delete child2;
     }
 }
 
@@ -74,7 +76,7 @@ bool CoastlineAgent::isSurrounded(int x, int y) {
 }
 
 bool CoastlineAgent::isLand(int x, int y) {
-    return (img->img[x][y] > 10);
+    return (img->imageIntData[x][y] > 10);
 }
 
 bool CoastlineAgent::isValid(int x, int y) {

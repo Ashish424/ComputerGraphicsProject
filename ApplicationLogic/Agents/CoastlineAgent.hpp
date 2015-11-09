@@ -9,7 +9,7 @@
 #include "Agent.hpp"
 class Data{
 public:
-    int img[1024][1024];
+    int imageIntData[1024][1024];
 };
 class CoastlineAgent: public Agent {
 private:
