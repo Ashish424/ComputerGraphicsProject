@@ -53,9 +53,11 @@ namespace TerrainDemo {
         //find translation part of the matrix,add to the position
         nextPos = (turtleData*glm::vec4(0.0,0.0,0.0,1.0));
         //TODO see this
+        //move the current pointer ahead
+
         Edge e(currentPos,nextPos);
         edges->push_back(e);
-
+        currentPos = nextPos;
 
       }
       else if(pattern.at(i) == '+' ){

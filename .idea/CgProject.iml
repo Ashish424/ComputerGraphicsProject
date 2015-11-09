@@ -42,6 +42,9 @@
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/PointLights.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Shader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Shader.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/temp/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/temp/TempCanvas.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/temp/TempCanvas.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Terrain.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Terrain.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/Textures.cpp" isTestSource="false" />

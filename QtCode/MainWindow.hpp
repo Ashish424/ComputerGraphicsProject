@@ -9,6 +9,8 @@
 #include <QMainWindow>
 
 class CGCanvas;
+class TempCanvas;
+class QStackedWidget;
 class MainWindow:public QMainWindow {
     Q_OBJECT
 public:
@@ -16,8 +18,11 @@ public:
 
 //non extendable destructor is non-virtual
     ~MainWindow();
+    QStackedWidget *OperationStackedWidget;
     CGCanvas *mainWindowGL;
-
+    TempCanvas *tempWindowGL;
+  //selects the mainWindow or tempwindow
+    int SetCurrent;
 };
 
 

@@ -24,13 +24,13 @@ namespace TerrainDemo {
     //heap based stack
     std::stack<glm::mat4> * matStack;
 
-    //TODO return this vector by making it shared ptr
     //edges contain vertices for glLines
+    //TODO return this vector by making it shared ptr
     std::vector<Edge>* edges;
-
+    //helper functions
     void modifyTransData(glm::mat4 &mat, const glm::vec3 &add);
     void modifyRotationData(glm::mat4 &mat, const glm::vec3 &axis, float radianAngle);
-    //helper functions
+
 
   };
 

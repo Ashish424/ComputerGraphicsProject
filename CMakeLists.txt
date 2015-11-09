@@ -30,6 +30,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/ApplicationLogic")
 add_subdirectory("${PROJECT_SOURCE_DIR}/ApplicationLogic/Agents")
 add_subdirectory("${PROJECT_SOURCE_DIR}/ApplicationLogic/utils")
 add_subdirectory("${PROJECT_SOURCE_DIR}/ApplicationLogic/L-Systems")
+#TODO move this work from here
+add_subdirectory("${PROJECT_SOURCE_DIR}/ApplicationLogic/temp")
+
 
 
 #include dir thank you El-Captain
