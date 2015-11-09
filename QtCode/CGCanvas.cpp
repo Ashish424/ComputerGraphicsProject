@@ -80,18 +80,18 @@ void CGCanvas::initializeGL()
 
 
     TransformData t1(pos,rot,scale);
-    pnoise = PerlinNoise(time(NULL));
-    img = cv::Mat::zeros(300,300,CV_8UC1);
-    tt=0.1;
-    for(int i=0; i<img.rows; ++i){
-        for(int j=0; j<img.cols; ++j){
-            double x = (double)j/((double)img.cols);
-            double y = (double)i/((double)img.rows);
-            double n = pnoise.noise(x,y,tt);
-            img.at<uchar>(i,j) = (uchar) floor(n*255);
-        }
-    }
-    cv::imshow("PerlinNoise",img);
+//    pnoise = PerlinNoise(time(NULL));
+//    img = cv::Mat::zeros(300,300,CV_8UC1);
+//    tt=0.1;
+//    for(int i=0; i<img.rows; ++i){
+//        for(int j=0; j<img.cols; ++j){
+//            double x = (double)j/((double)img.cols);
+//            double y = (double)i/((double)img.rows);
+//            double n = pnoise.noise(x,y,tt);
+//            img.at<uchar>(i,j) = (uchar) floor(n*255);
+//        }
+//    }
+//    cv::imshow("PerlinNoise",img);
 }
 void CGCanvas::setupGlew() const {
     glewExperimental = GL_TRUE;
@@ -104,21 +104,21 @@ void CGCanvas::setupGlew() const {
 void CGCanvas::FixedUpdate() {
 
 
-
-    tt+=0.01;
-    for(int i=0; i<img.rows; ++i){
-        for(int j=0; j<img.cols; ++j){
-            double x = (double)j/((double)img.cols);
-            double y = (double)i/((double)img.rows);
-            //scale here multiply by a bigger no.
-            double n = pnoise.noise(25*x,25*y,tt);
-            img.at<uchar>(i,j) = (uchar) floor(n*255);
-        }
-    }
-    cv::imshow("PerlinNoise",img);
+//
+//    tt+=0.01;
+//    for(int i=0; i<img.rows; ++i){
+//        for(int j=0; j<img.cols; ++j){
+//            double x = (double)j/((double)img.cols);
+//            double y = (double)i/((double)img.rows);
+//            //scale here multiply by a bigger no.
+//            double n = pnoise.noise(25*x,25*y,tt);
+//            img.at<uchar>(i,j) = (uchar) floor(n*255);
+//        }
+//    }
+    //cv::imshow("PerlinNoise",img);
     //slideAhead+=0.00016;
 
-    //this->repaint();
+    this->repaint();
 
 
 

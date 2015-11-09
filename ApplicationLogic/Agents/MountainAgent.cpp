@@ -8,6 +8,8 @@
 #include <ApplicationLogic/utils/PerlinNoise.hpp>
 #include "MountainAgent.hpp"
 
+#define __SUP_HEIGHT__ 400
+
 MountainAgent::MountainAgent(int tokens, cv::Mat &img, std::pair<int, int> startingPoint, int changeDirection): Agent(tokens) {
     assert(img.channels() == 1);
     image = img;
@@ -31,6 +33,10 @@ void MountainAgent::makeMountains(cv::Mat &image, uchar color) {
     for(int y = 0; y < image.rows; y++){
         for(int x = 0; x < image.cols; x++){
             float distance = 1e9;
+            if(image.at<uchar>(y, x) == 0){
+                dis.at<float>(y, x) = 0;
+                continue;
+            }
             for(int z = 0; z < curve.size(); z++){
                 float nx = curve[z].first;
                 float ny = curve[z].second;
@@ -44,21 +50,26 @@ void MountainAgent::makeMountains(cv::Mat &image, uchar color) {
 
     for(int i=0; i<image.rows; i++){
         for(int j=0; j< image.cols; j++){
+            if(dis.at<float>(i,j) == 0 && image.at<uchar>(i, j) == 0){
+                image.at<uchar>(i, j) = 0;
+                continue;
+            }
             dis.at<float>(i, j) /= max_dis;
             dis.at<float>(i, j) = 1 - dis.at<float>(i, j);
             //TODO have different falloff functions here
             image.at<uchar>(i, j) = (uchar) (255 * dis.at<float>(i, j));
             float ans = image.at<uchar>(i,j);
-            ans /= 300;
+            ans /= __SUP_HEIGHT__;
             float x = j;x/=image.cols;
             float y = i;y/=image.rows;
             for(int k=1; k<4; k++){
-                float f =  k*k + 10;
+                float f =  k + 10;
                 float a = 2*k*k + 3;
                 ans += 1/f*n[0].noise(x*a,y*a,0.8);
             }
             ans = std::min(ans,1.0f);
             ans *= 255;
+
             image.at<uchar>(i, j) = (uchar) ans;
         }
     }
@@ -74,6 +85,8 @@ void MountainAgent::doWork() {
     srandom((unsigned int) time(NULL));
     while(tokens--){
 
+
+
         if(chngCount==0){
             float d = random()%100+1;
             direction += M_PI/8 - (addDirection * d)/ 100;
@@ -81,16 +94,18 @@ void MountainAgent::doWork() {
             chngCount = changeDirc;
         }
 
+        float d = random()%100+1;
+        direction += M_PI/100 - ((M_PI/50) * d)/ 100;
         chngCount--;
         int x = _x, y = _y;
         assert(x >=0 && y >= 0 && x < image.cols && y < image.rows);
-        image.at<uchar>(y, x) = 255;
-        _x += sinf(direction);
-        _y += cosf(direction);
-        if(_x >= image.cols || _y >= image.rows || _x < 0 || _y < 0){
+        while(_x >= image.cols || _y >= image.rows || _x < 0 || _y < 0 || image.at<uchar>((int) _y, (int) _x) == 0){
             _x = random()%image.cols;
             _y = random()%image.rows;
         }
+        image.at<uchar>(y, x) = 255;
+        _x += sinf(direction);
+        _y += cosf(direction);
 
     }
 }
