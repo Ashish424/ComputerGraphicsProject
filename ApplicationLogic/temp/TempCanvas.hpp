@@ -13,10 +13,15 @@
 #include <QTimer>
 #include <opencv2/core/mat.hpp>
 #include <ApplicationLogic/utils/PerlinNoise.hpp>
+
+
+
+#include <ApplicationLogic/L-Systems/Plant.hpp>
 #include "ApplicationLogic/World.hpp"
 #include "ApplicationLogic/Grid.hpp"
+#include <QPushButton>
 
-
+class TerrainDemo_Shader;
 class TempCanvas : public QOpenGLWidget
 {
  Q_OBJECT
@@ -32,6 +37,7 @@ class TempCanvas : public QOpenGLWidget
 
  private slots:
   void FixedUpdate();
+  void clickedNext();
 
  private:
 
@@ -39,6 +45,14 @@ class TempCanvas : public QOpenGLWidget
   float timestep = 16;
   float slideAhead = 0;
   void setupGlew() const;
+  //TODO remove this temp method
+
+  TerrainDemo::Plant * plant;
+  TerrainDemo::Shader* shad;
+  QPushButton * nextButton;
+  int NextPlant;
+
+
 };
 
 

@@ -63,22 +63,12 @@ void mountainSpace(){
 
 void TestingLsys(){
 
-    TerrainDemo::Rules r1;
-
-    r1["F"] = "F[-F]F[+F][F]";
-
-    TerrainDemo::LSystem l1("F",r1);
-    std::shared_ptr<std::string> gen = l1.getLSysString(1,false);
-    printf("the generated string is  %s\n",gen->c_str());
-
-    TerrainDemo::Turtle t1(gen,glm::vec4(0.0,0.0,0.0,1.0),glm::vec3(0.0,1.0,0.0));
-
-
 
 }
 
 using namespace std;
 void demoIslandSpace(){
+
     std::string imgOutput = "/Users/tgz/Desktop/CoastLine.jpg";
     std::string rawOutput = "/Users/tgz/Desktop/rawOutput.jpg";
 

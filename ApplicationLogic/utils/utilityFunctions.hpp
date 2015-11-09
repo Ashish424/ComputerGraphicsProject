@@ -9,12 +9,15 @@
 
 
 #include <string>
-#include "ApplicationLogic/Grid.hpp"
-#include "ApplicationLogic/Terrain.hpp"
+
+
+class Grid;
+class Plant;
+class Terrain;
 namespace TerrainDemo {
 void updateGridShader1(Grid *grid);
 void updateTerrainShader1(Terrain* terr);
-
+void updatePlantnShader1(Plant *plant);
 }
 
 

@@ -4,6 +4,11 @@
 #include <glm/gtx/string_cast.hpp>
 #include "utilityFunctions.hpp"
 
+#include <ApplicationLogic/L-Systems/Plant.hpp>
+#include "ApplicationLogic/Grid.hpp"
+#include "ApplicationLogic/Terrain.hpp"
+
+
 #include "ApplicationLogic/Shader.hpp"
 #include "ApplicationLogic/PointLights.hpp"
 namespace TerrainDemo {
@@ -105,6 +110,41 @@ namespace TerrainDemo {
 
 
   }
+  void updatePlantnShader1(Plant *plant){
+    //TODO use camera here
+
+//    glm::mat4 getView = grid->current_cam->GetViewProjection();
+
+    //identity matrix for view
+    glm::mat4 getView = glm::mat4();
+    std::string v("view");
+    std::string m("model");
+
+
+    TransformData t1 = plant->getTransdata();
+
+
+
+
+    glm::mat4 model = t1.GetModel();
+
+
+    GLuint hold_view = plant->shader->getLocation(v);
+    GLuint hold_model = plant->shader->getLocation(m);
+
+
+    glUniformMatrix4fv(hold_view, 1, GL_FALSE, &getView[0][0]);
+    glUniformMatrix4fv(hold_model, 1, GL_FALSE, &model[0][0]);
+
+
+
+
+
+
+
+
+  }
+
 
 
 
