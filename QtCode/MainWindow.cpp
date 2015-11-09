@@ -5,6 +5,10 @@
 #include "MainWindow.hpp"
 #include "CGCanvas.hpp"
 #include <QOpenGLContext>
+#include <QStackedWidget>
+//TODO remove this header
+#include "ApplicationLogic/temp/TempCanvas.hpp"
+
 
 
 MainWindow::~MainWindow() {
@@ -16,7 +20,25 @@ MainWindow::~MainWindow() {
 }
 
 MainWindow::MainWindow(QWidget *parent) {
-    this->mainWindowGL = new CGCanvas(this);
+
+
+
     this->resize(640,480);
-    this->setCentralWidget(mainWindowGL);
+
+    //create stacked widget
+    OperationStackedWidget = new QStackedWidget(this);
+    this->setCentralWidget(OperationStackedWidget);
+
+    //add stuff to stack widget
+    OperationStackedWidget->setObjectName(QStringLiteral("OperationStackedWidget"));
+    OperationStackedWidget->setGeometry(QRect(620, 90, 191, 171));
+    this->mainWindowGL = new CGCanvas(OperationStackedWidget);
+    this->tempWindowGL = new TempCanvas(OperationStackedWidget);
+
+    OperationStackedWidget->addWidget(mainWindowGL);
+    OperationStackedWidget->addWidget(tempWindowGL);
+
+
+
+
 }

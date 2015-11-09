@@ -7,12 +7,12 @@
 
 #include <opencv2/highgui.hpp>
 //TODO diable these debug macros
-#define DEBUG_CANVAS
+#define DEBUG_TEMP
 
 
 
 
-#ifdef DEBUG_CANVAS
+#ifdef DEBUG_TEMP
 #include <QOpenGLContext>
 #endif
 CGCanvas::CGCanvas(QWidget *parent):QOpenGLWidget(parent)
@@ -39,6 +39,7 @@ void CGCanvas::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
 // Accept fragment if it closer to the camera than the former one
+    //TODO see less equal vs less
     glDepthFunc(GL_LESS);
 
 
@@ -60,7 +61,7 @@ void CGCanvas::initializeGL()
     glOrtho(0,width(),height(),0,-1,1);
     glLoadIdentity();
 
-#ifdef DEBUG_CANVAS
+#ifdef DEBUG_TEMP
     QOpenGLContext *cont = context();
     qDebug() << "Context valid: " << cont->isValid();
     qDebug() << "Really used OpenGl: " << cont->format().majorVersion() << "." << cont->format().minorVersion();

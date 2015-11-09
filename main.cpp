@@ -61,6 +61,7 @@ void mountainSpace(){
 void TestingLsys(){
 
     TerrainDemo::Rules r1;
+
     r1["F"] = "F[-F]F[+F][F]";
 
     TerrainDemo::LSystem l1("F",r1);
