@@ -18,7 +18,7 @@ void CoastlineAgent::doWork() {
     srandom(time(NULL));
     int w = maxX - minX + 1;
     int h = maxY - minY + 1;
-    if( w*h <= 120){
+    if( w*h <= 128){
         int dir = (int) (random()%8);
         std::pair<int, int> point = choosePoint(dir);
         while(tokens > 0 && point.first != -1 && point.second != -1){
@@ -40,7 +40,7 @@ void CoastlineAgent::doWork() {
                     }
                 }
             }
-            if(score > 1.7e3){
+            if(score > 1.2e3){
                 img->imageIntData[mxx][mxy]=111;
             }
             point = choosePoint(dir);

@@ -36,7 +36,7 @@ namespace TerrainDemo {
         int imgZ = imgSize.height-1;
 
 
-        heightMap = cv::Mat::zeros(imgX,imgZ,CV_8UC1);
+        //heightMap = cv::Mat::zeros(imgX,imgZ,CV_8UC1);
         std::vector<std::vector< glm::vec2> > CoordsData(dimZ, std::vector<glm::vec2>(dimX));
 
 
@@ -154,8 +154,8 @@ void Terrain::DrawGameObject() {
 
 
     //update using perlin noise here
-    updateHeightMap();
-    updatePositionData(heightMap);
+    //updateHeightMap();
+    //updatePositionData(heightMap);
     updateNormalData();
     std::vector<glm::vec3> linearVertexData;
     std::vector<glm::vec3> linearNormalData;

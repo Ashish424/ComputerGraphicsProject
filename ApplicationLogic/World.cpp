@@ -132,10 +132,10 @@ namespace TerrainDemo {
             new Terrain(this->cam,
                         t1,
                         this->shaders[TerrainShader],
-                        64,
-                        64,
+                        1024,
+                        1024,
                         1.0,
-                        "./Assets/testHeightmap.png",
+                        "./Assets/demo.png",
                         &updateTerrainShader1));
         objects.push_back(
             new Grid(this->cam,
