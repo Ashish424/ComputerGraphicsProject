@@ -31,23 +31,35 @@ namespace TerrainDemo {
 
 
   enum class PlantTypes {
-    TESTPLANT
+    TESTPLANT_1,
+    TESTPLANT_2,
+    TESTPLANT_3,
+    TESTPLANT_4,
+    TESTPLANT_5,
+    TESTPLANT_6
+
   };
   class LSystem {
    public:
-    //TODO define L-system language
-    LSystem(const std::string & start,const Rules & productionRules);
+    //remove last two paramters
+    LSystem(const std::string &start, const Rules &productionRules, float amount, float angle, int level);
     //constructor for testing
-    LSystem(const PlantTypes & type );
+    //TODO temp function
+    static LSystem getLsystem(const PlantTypes & type);
+
     //specify the depth of the string to be generated
-    //TODO make it virtual for this base class of L-system
     std::shared_ptr<std::string> getLSysString(unsigned int level, bool saveIt);
+
+
+
     //TODO add virtual method parse for different plants
     //bracketed l-system
-//    void parse(sh);
-//    std::shared_ptr<std::string> currentString;
     std::string start;
     Rules productionRules;
+    //TODO removw this temp
+    float amount;
+    float angle;
+    int level;
   };
 
 

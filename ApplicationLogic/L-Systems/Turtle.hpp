@@ -15,8 +15,14 @@ namespace TerrainDemo {
   typedef std::pair<glm::vec4,glm::vec4> Edge;
   class Turtle {
    public:
-    Turtle(std::shared_ptr<std::string> patternString,const glm::vec4 & initialPosition ,const glm::vec3 & direction);
+    //TODO remove last two parameters when l-sys made paramteric
+    Turtle(std::shared_ptr<std::string> patternString,
+           const glm::vec4 &initialPosition,
+           const glm::vec3 &direction,
+           float moveAmount,
+           float angle);
     ~Turtle();
+    std::shared_ptr<std::vector<Edge>> getEdges();
    private:
     //orignal position and direction of the turtle
     glm::vec4 position;
@@ -26,7 +32,16 @@ namespace TerrainDemo {
 
     //edges contain vertices for glLines
     //TODO return this vector by making it shared ptr
-    std::vector<Edge>* edges;
+    std::shared_ptr<std::vector<Edge>>  edges;
+    //getter for edges,used by plants
+
+//
+//    //set turtle attribs
+//    void setRotationAngle();
+//    void setMoveAmount();
+    //default values
+    float amount = 0.1,angle = 22.5;
+
     //helper functions
     void modifyTransData(glm::mat4 &mat, const glm::vec3 &add);
     void modifyRotationData(glm::mat4 &mat, const glm::vec3 &axis, float radianAngle);

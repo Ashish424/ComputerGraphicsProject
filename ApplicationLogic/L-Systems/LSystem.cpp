@@ -6,19 +6,14 @@
 
 namespace TerrainDemo {
 
-  LSystem::LSystem(const std::string &start, const Rules & productionRules):
-      productionRules(productionRules),start(start) {
+  LSystem::LSystem(const std::string &start, const Rules &productionRules, float amount, float angle, int level) :
+      productionRules(productionRules),start(start),amount(amount),angle(angle),level(level) {
 
 
 
 
   }
-  LSystem::LSystem(const PlantTypes &type) {
-    if(type == PlantTypes::TESTPLANT){
-      //pass the predefined rules here
-    }
 
-  }
 
 
   std::shared_ptr<std::string> LSystem::getLSysString(unsigned int level, bool saveIt) {
@@ -55,6 +50,77 @@ namespace TerrainDemo {
     }
     //TODO add save it code here
     return currentString;
+
+  }
+  LSystem LSystem::getLsystem(const PlantTypes &type) {
+    if(type == PlantTypes::TESTPLANT_1){
+
+      float angle,amount;
+      TerrainDemo::Rules r1;
+      r1["F"] = "F[+F]F[-F][F]";
+      angle = 20;
+      amount = 0.025;
+      int level = 5;
+      return LSystem("F", r1, amount, angle, level);
+
+
+
+    }
+    else if(type == PlantTypes::TESTPLANT_2){
+      float angle,amount;
+      TerrainDemo::Rules r1;
+      r1["F"] = "F[+F]F[-F]F";
+      angle = 25.7;
+      amount = 0.006;
+      int level = 5;
+      return LSystem("F", r1, amount, angle, level);
+
+    }
+    else if(type == PlantTypes::TESTPLANT_3){
+      float angle,amount;
+      TerrainDemo::Rules r1;
+      r1["F"] = "FF-[-F+F+F]+[+F-F-F]";
+      angle = 22.5;
+      amount = 0.03;
+      int level = 4;
+      return LSystem("F", r1, amount, angle, level);
+
+    }
+    else if(type == PlantTypes::TESTPLANT_4){
+      float angle,amount;
+      TerrainDemo::Rules r1;
+      r1["F"] = "FF";
+      r1["X"] = "F[+X]F[-X]+X";
+      angle = 20.0;
+      amount = 0.006;
+      int level = 7;
+      return LSystem("X", r1, amount, angle, 7);
+
+
+
+
+    }
+    else if(type == PlantTypes::TESTPLANT_5){
+      float angle,amount;
+      TerrainDemo::Rules r1;
+      r1["F"] = "FF";
+      r1["X"] = "F[+X][-X]FX";
+      angle = 25.7;
+      amount = 0.006;
+      int level = 7;
+      return LSystem("X", r1, amount, angle, 7);
+
+    }
+    else if(type == PlantTypes::TESTPLANT_6){
+      float angle,amount;
+      TerrainDemo::Rules r1;
+      r1["F"] = "FF";
+      r1["X"] = "F-[[X]+X]+F[+FX]-X";
+      angle = 22.5;
+      amount = 0.013;
+      int level = 5;
+      return LSystem("X", r1, amount, angle, 5);
+    }
 
   }
 }

@@ -5,13 +5,18 @@
 #include "Turtle.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
-#define DEBUG_TURTLE
-#define VAL 10
+//#define DEBUG_TURTLE
+
 namespace TerrainDemo {
 
 
-  Turtle::Turtle(std::shared_ptr<std::string> patternString,const glm::vec4 & initialPosition,const glm::vec3  & direction ):
-      position(initialPosition), direction(direction), matStack(new std::stack<glm::mat4>()),edges(new std::vector<Edge>) {
+  Turtle::Turtle(std::shared_ptr<std::string> patternString,
+                   const glm::vec4 &initialPosition,
+                   const glm::vec3 &direction,
+                   float moveAmount,
+                   float angle) :
+      position(initialPosition), direction(direction), matStack(new std::stack<glm::mat4>()),edges(new std::vector<Edge>)
+      ,angle(angle),amount(moveAmount) {
     glm::normalize(this->direction);
 
     std::string & pattern = *patternString;
@@ -36,20 +41,16 @@ namespace TerrainDemo {
       //F: move forward a certain length (e.g. 10 pixels)
       //• +: turn left 30 degrees
       //• -: turn right 30 degrees
+      //X
 
-      if(pattern.at(i) == 'F'){
+      if(pattern.at(i) == 'F' || pattern.at(i) == 'X'){
 
 
-        //TODO parse the amount to move forward
-        float amount = 1;
+
         //move forward in the required direction
         glm::vec3 moveahead = amount*glm::vec3(turtleData*glm::vec4(this->direction,0.0));
-//        printf("move ahead is %s\n",glm::to_string(moveahead).c_str());
         modifyTransData(turtleData,moveahead);
-//        turtleData = glm::translate(turtleData,moveahead);
-//        printf("the current pos is %s\n",glm::to_string(currentPos).c_str());
-//        printf("turtle f data is %s\n",glm::to_string(turtleData).c_str());
-//        printf("mvoeahed is %s\n",glm::to_string(moveahead).c_str());
+
         //find translation part of the matrix,add to the position
         nextPos = (turtleData*glm::vec4(0.0,0.0,0.0,1.0));
         //TODO see this
@@ -65,11 +66,7 @@ namespace TerrainDemo {
         //TODO seperate helper function for these rotations
         //rotating along Z-axis anticlockwise(left rotation)
 
-        modifyRotationData(turtleData,glm::vec3(0.0, 0.0, 1.0),glm::radians(90.0f));
-
-//        turtleData = glm::rotate(turtleData, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-        //only use the direction 3X3 part of the matrix
-//        this->direction = glm::vec3(turtleData*glm::vec4(this->direction,0.0));
+        modifyRotationData(turtleData,glm::vec3(0.0, 0.0, 1.0),glm::radians(this->angle));
 
       }
       else if(pattern.at(i) == '-' ){
@@ -78,12 +75,9 @@ namespace TerrainDemo {
 
         //TODO seperate helper function for these rotations
         //rotating along Z-axis anticlockwise(left rotation)
-        modifyRotationData(turtleData,glm::vec3(0.0, 0.0, 1.0),glm::radians(-90.0f));
+        modifyRotationData(turtleData,glm::vec3(0.0, 0.0, 1.0),glm::radians(-this->angle));
 
-//        turtleData = glm::rotate(turtleData,glm::radians( -90.0f), glm::vec3(0.0, 0.0, 1.0));
-//        printf("matrix state%s \n",glm::to_string(turtleData).c_str());
-//        this->direction = glm::vec3(turtleData*glm::vec4(this->direction,0.0));
-//        printf("rotated vector is %s\n",glm::to_string(this->direction).c_str());
+
 
 
       }
@@ -99,7 +93,7 @@ namespace TerrainDemo {
       else if(pattern.at(i) == ']'){
         turtleData = matStack->top();
 
-        //TODO restore position and direction here
+
         matStack->pop();
         //restore the current position var and direction here
         currentPos = (turtleData*glm::vec4(0.0,0.0,0.0,1.0));
@@ -144,5 +138,7 @@ namespace TerrainDemo {
 
     delete matStack;
   }
-
+  std::shared_ptr<std::vector<Edge>> Turtle::getEdges() {
+    return this->edges;
+  }
 }
