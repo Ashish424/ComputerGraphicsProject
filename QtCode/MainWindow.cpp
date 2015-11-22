@@ -5,6 +5,7 @@
 #include "MainWindow.hpp"
 #include "ui_mainwindow.hpp"
 #include "coastlinetab.hpp"
+#include "CGCanvas.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
@@ -12,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tabWidget->addTab(new CoastLineTab(), "Coastline");
+    //ui->tabWidget->addTab(new CGCanvas(), "CGCanvas");
 }
 
 MainWindow::~MainWindow()

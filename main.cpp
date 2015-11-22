@@ -67,8 +67,8 @@ void TestingLsys(){
 
 }
 
+
 using namespace std;
-Data img;
 void demoIslandSpace(){
 
     std::string imgOutput = "/Users/tgz/Desktop/CoastLine.jpg";
@@ -80,17 +80,21 @@ void demoIslandSpace(){
     int m_height = 1024;
     int m_width = 1024;
     cv::Mat im = cv::Mat::zeros(1024,1024,CV_8UC1);
-    CoastlineAgent *agent = new CoastlineAgent(m_width*m_height*2, &img, m_width, m_height, 0, m_width - 1, 0, m_height - 1);
-    std::memset(img.imageIntData, 0, sizeof(int)*m_height*m_width);
-    agent->doWork();
-    for(int i=0; i<m_height; i++){
-        for(int j=0; j<m_width; j++){
-            if(img.imageIntData[i][j] > 0){
-                im.at<uchar>(i,j) = 255;
-            }
-            //std::printf("(%d,%d): %d | ",i,j,img.img[i][j]);
-        }
-    }
+    //CoastlineAgent *agent = new CoastlineAgent(m_width*m_height*2, &img, m_width, m_height, 0, m_width - 1, 0, m_height - 1);
+
+    CoastlineAgent agent(m_height*m_width*2, m_height, m_width);
+    CoastlineAgent::setThresholdValue(1.2e3);
+    //std::memset(img.imageIntData, 0, sizeof(int)*m_height*m_width);
+    agent.doWork();
+//    for(int i=0; i<m_height; i++){
+//        for(int j=0; j<m_width; j++){
+//            if(img.imageIntData[i][j] > 0){
+//                im.at<uchar>(i,j) = 255;
+//            }
+//            //std::printf("(%d,%d): %d | ",i,j,img.img[i][j]);
+//        }
+//    }
+    im = agent.getImage();
     cv::imwrite(rawOutput.c_str(),im);
 
 
@@ -137,7 +141,7 @@ void demoIslandSpace(){
      * median Blur is used to smooth the contour regions without
      * disturbing the edges
      */
-    cv::medianBlur(im , im, 31);
+    //cv::medianBlur(im , im, 31);
 
     cv::imwrite(imgOutput.c_str(),im);
 

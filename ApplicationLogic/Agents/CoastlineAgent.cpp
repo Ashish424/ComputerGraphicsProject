@@ -5,10 +5,14 @@
 #include <iostream>
 #include <stdlib.h>
 #include <cmath>
+#include <assert.h>
 #include "CoastlineAgent.hpp"
-#pragma clang diagnostic push
 
+double CoastlineAgent::thresholdValue = 1e3;
+int CoastlineAgent::patchSize = 128;
 int dirList[8][2] = {{0,1}, {0,-1}, {1,0}, {-1,0}, {1,1}, {1,-1}, {-1,1}, {-1,-1}};
+
+
 CoastlineAgent::~CoastlineAgent() {
 
 }
@@ -18,7 +22,7 @@ void CoastlineAgent::doWork() {
     srandom(time(NULL));
     int w = maxX - minX + 1;
     int h = maxY - minY + 1;
-    if( w*h <= 128){
+    if( w*h <= patchSize){
         int dir = (int) (random()%8);
         std::pair<int, int> point = choosePoint(dir);
         while(tokens > 0 && point.first != -1 && point.second != -1){
@@ -32,7 +36,7 @@ void CoastlineAgent::doWork() {
                 int yy = point.second + dirList[j][1];
                 if(isValid(xx,yy) && !isLand(xx, yy)){
                     std::pair<int, int> pt = std::make_pair(xx,yy);
-                    double sp = distance(pt,repul) - 2*distance(pt, attr) +3*minDistFromEdge(pt);
+                    double sp = distance(pt,repul) - 2*distance(pt, attr) + 3*minDistFromEdge(pt);
                     if(sp > score){
                         mxx = xx;
                         mxy = yy;
@@ -40,8 +44,8 @@ void CoastlineAgent::doWork() {
                     }
                 }
             }
-            if(score > 1.2e3){
-                img->imageIntData[mxx][mxy]=111;
+            if(score > CoastlineAgent::thresholdValue){
+                image.at<uchar>(mxy,mxx) = 255;
             }
             point = choosePoint(dir);
             tokens--;
@@ -50,13 +54,14 @@ void CoastlineAgent::doWork() {
 
         int add=0;
         if(tokens & 1)add= 1;
+
         CoastlineAgent *child1,*child2;
         if(w > h){
-            child1 = new CoastlineAgent(tokens/2 ,img, width, height, minX,minX+w/2,minY, maxY);
-            child2 = new CoastlineAgent(tokens/2 + add,img, width, height, minX+w/2 +1, maxX, minY, maxY);
+            child1 = new CoastlineAgent(tokens/2 ,image, width, height, minX,minX+w/2,minY, maxY);
+            child2 = new CoastlineAgent(tokens/2 + add,image, width, height, minX+w/2 +1, maxX, minY, maxY);
         }else{
-            child1 = new CoastlineAgent(tokens/2,img, width, height, minX, maxX, minY,minY+h/2);
-            child2 = new CoastlineAgent(tokens/2 + add,img, width, height, minX, maxX, minY + h/2 + 1, maxY);
+            child1 = new CoastlineAgent(tokens/2,image, width, height, minX, maxX, minY,minY+h/2);
+            child2 = new CoastlineAgent(tokens/2 + add,image, width, height, minX, maxX, minY + h/2 + 1, maxY);
         }
         child1->doWork();
         child2->doWork();
@@ -76,23 +81,13 @@ bool CoastlineAgent::isSurrounded(int x, int y) {
 }
 
 bool CoastlineAgent::isLand(int x, int y) {
-    return (img->imageIntData[x][y] > 10);
+    return (image.at<uchar>(y, x) == 255);
 }
 
 bool CoastlineAgent::isValid(int x, int y) {
     return (x>=minX && x<=maxX && y >= minY  && y<=maxY);
 }
 
-CoastlineAgent::CoastlineAgent(int tokens, Data *img, int width, int height, int minX, int maxX, int minY,
-                               int maxY): Agent(tokens) {
-    this->img = img;
-    this->width = width;
-    this->height = height;
-    this->minX = minX;
-    this->maxX = maxX;
-    this->minY = minY;
-    this->maxY = maxY;
-}
 
 std::pair<int, int> CoastlineAgent::choosePoint(int dir) {
     std::pair<int, int> point;
@@ -134,4 +129,17 @@ double CoastlineAgent::minDistFromEdge(std::pair<int, int> point) {
     return (a>b)?b:a;
 }
 
-#pragma clang diagnostic pop
+CoastlineAgent::CoastlineAgent(int tokens, int rows, int cols):
+        Agent(tokens),width(cols),height(rows),minX(0),maxX(cols - 1),minY(0),maxY(rows - 1) {
+    image = cv::Mat::zeros(rows, cols, CV_8UC1);
+}
+
+CoastlineAgent::CoastlineAgent(int tokens, cv::Mat &image, int width, int height, int minX, int maxX, int minY,
+                               int maxY): Agent(tokens),width(width),height(height),image(image),minX(minX),maxX(maxX),minY(minY),maxY(maxY) {
+    assert(this->image.rows == height && this->image.cols == width);
+}
+
+cv::Mat CoastlineAgent::getImage() {
+    return image.clone();
+}
+
