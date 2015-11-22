@@ -25,7 +25,7 @@ int main(int argc,char *argv[]) {
     setContext();
     TestingLsys();
 
-    demoIslandSpace();
+    //demoIslandSpace();
     //mountainSpace();
 
     MainWindow w;

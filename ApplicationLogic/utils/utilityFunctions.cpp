@@ -43,8 +43,8 @@ namespace TerrainDemo {
     glm::vec3 pos = glm::vec3(0.0, 0.0, 0.0);
     glm::vec3 scale = glm::vec3(1.0, 1.0, 1.0);
     glm::vec3 rot = glm::vec3(0.0, rotation,0.0);
-    rotation+=0.001f;
-    TransformData t1 = terr->getTransdata();
+    rotation+=0.01f;
+    TransformData t1 = TransformData(pos, rot, scale);
     glm::mat4 model = t1.GetModel();
     //lighting information
     glm::vec3 lightPos(0.0,3.0,0.0);

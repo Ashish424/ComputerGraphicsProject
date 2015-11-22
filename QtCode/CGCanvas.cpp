@@ -116,7 +116,7 @@ void CGCanvas::FixedUpdate() {
 //        }
 //    }
     //cv::imshow("PerlinNoise",img);
-    //slideAhead+=0.00016;
+    slideAhead+=0.00016;
 
     this->repaint();
 

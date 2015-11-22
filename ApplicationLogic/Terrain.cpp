@@ -155,8 +155,8 @@ void Terrain::DrawGameObject() {
 
     //update using perlin noise here
     //updateHeightMap();
-    //updatePositionData(heightMap);
-    updateNormalData();
+    updatePositionData(heightMap);
+    //updateNormalData();
     std::vector<glm::vec3> linearVertexData;
     std::vector<glm::vec3> linearNormalData;
     linearizeData(linearVertexData,linearNormalData);

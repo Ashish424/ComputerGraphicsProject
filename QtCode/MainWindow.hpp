@@ -1,32 +1,27 @@
 //
-// Created by Ashish Aapan on 13/10/15.
+// Created by Priyanshu Singh on 22/11/15.
 //
 
-#ifndef CGPROJECT_MAINWINDOW_H
-#define CGPROJECT_MAINWINDOW_H
-
+#ifndef CGPROJECT_MAINWINDOW_HPP
+#define CGPROJECT_MAINWINDOW_HPP
 
 #include <QMainWindow>
 
-class CGCanvas;
-class TempCanvas;
-class QStackedWidget;
-class MainWindow:public QMainWindow {
+namespace Ui {
+    class MainWindow;
+}
 
-    void keyPressEvent(QKeyEvent *keyEvent) override;
+class MainWindow : public QMainWindow
+{
+Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent=nullptr);
-
-//non extendable destructor is non-virtual
+    explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    QStackedWidget *OperationStackedWidget;
-    CGCanvas *mainWindowGL;
-    TempCanvas *tempWindowGL;
-  //selects the mainWindow or tempwindow
-    int SetCurrent;
 
+private:
+    Ui::MainWindow *ui;
 };
 
 
-#endif //CGPROJECT_MAINWINDOW_H
+#endif //CGPROJECT_MAINWINDOW_HPP

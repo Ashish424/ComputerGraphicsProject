@@ -1,50 +1,20 @@
 //
-// Created by Ashish Aapan on 13/10/15.
+// Created by Priyanshu Singh on 22/11/15.
 //
 
 #include "MainWindow.hpp"
-#include "CGCanvas.hpp"
-#include <QOpenGLContext>
-#include <QStackedWidget>
-#include <qpushbutton.h>
-#include <QKeyEvent>
-//TODO remove this header
-#include "ApplicationLogic/temp/TempCanvas.hpp"
+#include "ui_mainwindow.hpp"
+#include "coastlinetab.hpp"
 
-
-
-MainWindow::~MainWindow() {
-    QSurfaceFormat glFormat;
-    glFormat.setVersion(4,1);
-    glFormat.setProfile(QSurfaceFormat::CoreProfile);
-    glFormat.setDefaultFormat(glFormat);
-    glFormat.setSwapInterval(1);
+MainWindow::MainWindow(QWidget *parent) :
+        QMainWindow(parent),
+        ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+    ui->tabWidget->addTab(new CoastLineTab(), "Coastline");
 }
 
-MainWindow::MainWindow(QWidget *parent) {
-
-
-
-    this->resize(640,480);
-
-    //create stacked widget
-    OperationStackedWidget = new QStackedWidget(this);
-    this->setCentralWidget(OperationStackedWidget);
-
-    //add stuff to stack widget
-    OperationStackedWidget->setObjectName(QStringLiteral("OperationStackedWidget"));
-    OperationStackedWidget->setGeometry(QRect(620, 90, 191, 171));
-    this->mainWindowGL = new CGCanvas(OperationStackedWidget);
-    this->tempWindowGL = new TempCanvas(OperationStackedWidget);
-
-    OperationStackedWidget->addWidget(mainWindowGL);
-    OperationStackedWidget->addWidget(tempWindowGL);
-
-}
-
-void MainWindow::keyPressEvent(QKeyEvent *keyEvent) {
-    QWidget::keyPressEvent(keyEvent);
-    if(keyEvent->key() == Qt::Key_Shift){
-        OperationStackedWidget->setCurrentIndex(1-OperationStackedWidget->currentIndex());
-    }
+MainWindow::~MainWindow()
+{
+    delete ui;
 }

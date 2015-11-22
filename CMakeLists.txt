@@ -16,7 +16,7 @@ set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /opt/local/lib)
 set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} /usr/local/include)
 set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} /usr/local/Cellar/)
 
-set(SOURCE_FILES main.cpp ApplicationLogic/Agents/MountainAgent.cpp ApplicationLogic/Agents/MountainAgent.hpp)
+set(SOURCE_FILES main.cpp ApplicationLogic/Agents/MountainAgent.cpp ApplicationLogic/Agents/MountainAgent.hpp QtCode/CoastLineTab.cpp QtCode/CoastLineTab.hpp QtCode/ui_coastlinetab.hpp QtCode/ui_mainwindow.hpp QtCode/MainWindow.cpp QtCode/MainWindow.hpp)
 
 
 #TODO make the project cross platform compatible by using GLint instead of ints
