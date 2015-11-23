@@ -10,10 +10,12 @@
 #include <functional>
 #include "Model.hpp"
 namespace TerrainDemo {
+    enum class TerrainDrawMode {WIREFRAME,FILLED };
     class Terrain : public Model {
 
 
     public:
+        //TODO remove this old constructor
         Terrain(const MainCamera *cam,
                            const TransformData &transdata,
                            Shader *shader,
@@ -22,16 +24,32 @@ namespace TerrainDemo {
                            double maxHeight,
                            const std::string &heightImage,
                            std::function<void(Terrain *)> updateTerrainShader);
-        //TODO remove refactor this
-        void updateHeightMap();
 
 
+
+
+      Terrain(const MainCamera *cam,const TransformData &transdata,
+              Shader *shader,
+              const glm::vec3 & origin,
+              const std::string &heightImage,
+              unsigned int dimX,unsigned int dimZ,
+              std::function<void(Terrain *)> updateTerrainShader,
+              const TerrainDrawMode & mode);
+        //GUI event handlers
+        void updateHeightMap(const cv::Mat &updatedData);
+        void setDrawMode(const TerrainDrawMode & mode);
+        void setMinMaxTesselationFactors(int MinTess,int MaxTess);
 
     private:
         const glm::vec3 corner;
         GLuint dimX,dimZ;
         GLdouble maxHeight;
         cv::Mat heightMap;
+        TerrainDrawMode drawMode;
+        std::function<void(Terrain*)> updateTerrainShader;
+
+
+
       //vector of vectors for terrain
       std::vector< std::vector< glm::vec3> > VertexData;
       std::vector< std::vector<glm::vec3> > FinalNormals;
@@ -54,7 +72,7 @@ namespace TerrainDemo {
         GLuint vertexBuffers[NUM_BUFFERS];
         //TODO form texture class
         GLuint texture;
-        std::function<void(Terrain*)> updateTerrainShader;
+
 
         //helper methods
 
@@ -62,8 +80,6 @@ namespace TerrainDemo {
         void updatePositionData(const cv::Mat &img);
         void updateNormalData();
         void linearizeData(std::vector<glm::vec3> &linearVertexData, std::vector<glm::vec3> &linearNormalData) const;
-        //TODO temp var for perlin noise
-        PerlinNoise pnoise[4];
 
         //helper method for instances
         friend void updateTerrainShader1(Terrain* terr);

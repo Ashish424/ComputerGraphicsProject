@@ -61,8 +61,8 @@ namespace TerrainDemo {
 
 
         //shader1(Terrain shader)
-        indexVec[TerrainShader].push_back(ShaderDefinition(GL_VERTEX_SHADER,"./shaders/TerrainShader/TerrainVertex.glsl"));
-        indexVec[TerrainShader].push_back(ShaderDefinition(GL_FRAGMENT_SHADER,"./shaders/TerrainShader/TerrainFrag.glsl"));
+        indexVec[TerrainShader].push_back(ShaderDefinition(GL_VERTEX_SHADER,"./shaders/TerrainShader/LegacyTerrainShaders/TerrainVertex.glsl"));
+        indexVec[TerrainShader].push_back(ShaderDefinition(GL_FRAGMENT_SHADER,"./shaders/TerrainShader/LegacyTerrainShaders/TerrainFrag.glsl"));
 
         //vector of uniforms for each shader in pair
         uniformsVec[TerrainShader].push_back("model");
@@ -80,21 +80,7 @@ namespace TerrainDemo {
 
 
 
-
-
-
-
-      //simple shader for testing
         shaders.push_back(new Shader(indexVec[TerrainShader],uniformsVec[TerrainShader]));
-
-
-
-
-
-
-
-
-
 
 
 
@@ -113,9 +99,8 @@ namespace TerrainDemo {
 //        );
 
 //
-        this->cam = new MainCamera(glm::vec3(1.0f, 1.0f, 1.0f), 70.0f, (float) width / height, 1.0f, 5,
-                                   glm::vec3(0, 1, 0), glm::vec3(-3 * 1, -3 * 1, -3 * 1),CameraType::Perspective
-        );
+        this->cam = new MainCamera(glm::vec3(1.0f, 1.0f, 1.0f), 70.0f, (float) width / height, 0.1f, 5,
+                                   glm::vec3(0, 1, 0), glm::vec3(-3 * 1, -3 * 1, -3 * 1),CameraType::Perspective);
 
     }
 
@@ -132,10 +117,10 @@ namespace TerrainDemo {
             new Terrain(this->cam,
                         t1,
                         this->shaders[TerrainShader],
-                        1024,
-                        1024,
+                        512,
+                        512,
                         1.0,
-                        "./Assets/demo.png",
+                        "./Assets/testHeightmap.png",
                         &updateTerrainShader1));
         objects.push_back(
             new Grid(this->cam,
@@ -153,6 +138,7 @@ namespace TerrainDemo {
     }
 
 
+    //callback for updating camera based on mouse input
     void World::updateCamera() {
 
     }

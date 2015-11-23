@@ -16,6 +16,36 @@
 //#define DEBUG_TERRAIN
 namespace TerrainDemo {
 
+
+
+
+
+
+
+
+    Terrain::Terrain(const MainCamera *cam,const TransformData &transdata,
+                     Shader *shader,
+                     const glm::vec3 &origin,
+                     const std::string &heightImage,unsigned int dimX, unsigned int dimZ,
+                     std::function<void(Terrain * )> updateTerrainShader, const TerrainDrawMode &mode):
+                    Model(cam,transdata,shader),dimX(dimX),dimZ(dimZ),maxHeight(maxHeight) {
+
+
+
+
+
+
+
+
+    }
+    void Terrain::setDrawMode(const TerrainDrawMode &mode) {
+
+    }
+
+
+
+
+    //TODO remove this legacy code from here
     Terrain::Terrain(const MainCamera *cam,
                        const TransformData &transdata,
                        Shader *shader,
@@ -27,8 +57,8 @@ namespace TerrainDemo {
     Model(cam,transdata,shader),corner(-0.5f,-0.2f,-0.5f),dimX(dimX),dimZ(dimZ),maxHeight(maxHeight),VertexData(dimZ,std::vector<glm::vec3>(dimX)),
     FinalNormals(dimZ,std::vector<glm::vec3>(dimX)),updateTerrainShader(updateTerrainShader)
     {
-
-        //TODO correct remove this
+//
+//        //TODO correct remove this
         heightMap = loadImage(heightImage);
 
         cv::Size imgSize= heightMap.size();
@@ -130,12 +160,7 @@ namespace TerrainDemo {
 
 
         glBindVertexArray(0);
-        //TODO remove this from here
-        long long seed=time(NULL);
-        pnoise[0] = PerlinNoise(seed);
-        pnoise[1] = PerlinNoise(seed = (seed*33331 + 1001)*1000000007);
-        pnoise[2] = PerlinNoise(seed = (seed*33331 + 1001)*1000000007);
-        pnoise[3] = PerlinNoise(seed = (seed*33331 + 1001)*1000000007);
+
 
 
 
@@ -155,7 +180,7 @@ void Terrain::DrawGameObject() {
 
     //update using perlin noise here
     //updateHeightMap();
-    updatePositionData(heightMap);
+//    updatePositionData(heightMap);
     //updateNormalData();
     std::vector<glm::vec3> linearVertexData;
     std::vector<glm::vec3> linearNormalData;
@@ -209,7 +234,7 @@ void Terrain::DrawGameObject() {
 //TODO mipmaps generation
 
 //TODO have multiple textures-shaders-model setup correct.
-//TODO remove this method as it is side efect mat + load texture as well
+//TODO remove this method as it is side effect mat + load texture as well
     cv::Mat Terrain::loadImage(const std::string &filepath) {
 
         GLint width;
@@ -278,6 +303,7 @@ void Terrain::DrawGameObject() {
 
 
     }
+    //TODO remove this method as this will happen on the gpu
     void Terrain::updateNormalData() {
 
         std::vector<std:: vector<glm::vec3> > vNormals[2];
@@ -332,10 +358,10 @@ void Terrain::DrawGameObject() {
                 FinalNormals[i][j] = FinalNormal; // Store final normal of j-th vertex in i-th row
             }
         }
-
-
-
-
+//
+//
+//
+//
     }
     void Terrain::linearizeData(std::vector<glm::vec3> &linearVertexData, std::vector<glm::vec3> &linearNormalData) const {
         linearVertexData.reserve(dimZ*dimX);
@@ -348,21 +374,14 @@ void Terrain::DrawGameObject() {
         }
     }
 
-    void Terrain::updateHeightMap() {
-        static float tt = 0.0;
-        tt+=0.001;
-        for(int i=0; i<heightMap.rows; ++i){
-            for(int j=0; j<heightMap.cols; ++j){
-                double x = (double)j/((double)heightMap.cols);
-                double y = (double)i/((double)heightMap.rows);
-//scale here multiply by a bigger no.
-                double n=0;
-                for(int k=1; k<=4; ++k) {
-                    n += (1.0/(k*k+0.3))*pnoise[k-1].noise((2*k*k - 1) * x, (2*k*k - 1) * y, tt);
-                }
-                heightMap.at<uchar>(i,j) = (uchar) floor(n*255);
-            }
-        }
+    //TODO update this function with a render  to texture call
+    void Terrain::updateHeightMap(const cv::Mat &updatedData) {
 
     }
+
+
+
+
+
+
 }

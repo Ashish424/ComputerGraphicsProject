@@ -37,10 +37,12 @@ void CGCanvas::paintGL()
 {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glEnable(GL_DEPTH_TEST);
+
 // Accept fragment if it closer to the camera than the former one
     //TODO see less equal vs less
-    glDepthFunc(GL_LESS);
+    glDepthFunc(GL_LEQUAL);
 
 
 
@@ -74,12 +76,12 @@ void CGCanvas::initializeGL()
     glClearColor(0.0f,0.0f,0.0f,1.0f);
 
     world = new TerrainDemo::World(width(), height(), timestep);
-    glm::vec3 pos = glm::vec3(0.0,0.0,0.0);
-    glm::vec3 scale  = glm::vec3(1.0,1.0,1.0);
-    glm::vec3 rot = glm::vec3(0.0,0.0,0.0);
+//    glm::vec3 pos = glm::vec3(0.0,0.0,0.0);
+//    glm::vec3 scale  = glm::vec3(1.0,1.0,1.0);
+//    glm::vec3 rot = glm::vec3(0.0,0.0,0.0);
 
 
-    TransformData t1(pos,rot,scale);
+//    TransformData t1(pos,rot,scale);
 //    pnoise = PerlinNoise(time(NULL));
 //    img = cv::Mat::zeros(300,300,CV_8UC1);
 //    tt=0.1;

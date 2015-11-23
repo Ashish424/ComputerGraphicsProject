@@ -22,6 +22,7 @@ namespace TerrainDemo {
         World(int width, int height, float timestep);
 
         ~World();
+        //TODO add arguemnts for mouse callbacks here
         void update();
 
     public:

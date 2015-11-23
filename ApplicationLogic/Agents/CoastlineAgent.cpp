@@ -12,7 +12,6 @@ int dirList[8][2] = {{0,1}, {0,-1}, {1,0}, {-1,0}, {1,1}, {1,-1}, {-1,1}, {-1,-1
 CoastlineAgent::~CoastlineAgent() {
 
 }
-//
 
 void CoastlineAgent::doWork() {
     srandom(time(NULL));

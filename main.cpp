@@ -10,6 +10,10 @@
 #include "QtCode/MainWindow.hpp"
 #include "ApplicationLogic/L-Systems/LSystem.hpp"
 #include "ApplicationLogic/L-Systems/Turtle.hpp"
+
+
+#include "QtCode/CGCanvas.hpp"
+
 #define THRESHOLD 20
 #define COAST_COLOR 100
 void setContext();
@@ -23,17 +27,28 @@ int main(int argc,char *argv[]) {
 
     QApplication app(argc, argv);
     setContext();
-    TestingLsys();
 
-    //demoIslandSpace();
-    //mountainSpace();
 
+
+
+//TODO see there work and remove them
+//    TestingLsys();
+//demoIslandSpace();
+//mountainSpace();
+
+
+
+//TODO enable mainwindow here
     MainWindow w;
     w.show();
-//    FindDialog* f1 = new FindDialog;
-//    f1->show();
 
-//    cout << "Hello, World!" << endl;
+
+
+
+//TODO remove this
+//    CGCanvas c1;
+//    c1.show();
+
     return app.exec();
 
 }
