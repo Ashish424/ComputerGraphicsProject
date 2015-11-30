@@ -9,8 +9,9 @@ set(SOURCE_FILES ${SOURCE_FILES}
 
 
         ${CMAKE_CURRENT_SOURCE_DIR}/PerlinNoise.cpp ${CMAKE_CURRENT_SOURCE_DIR}/PerlinNoise.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/utilityFunctions.hpp ${CMAKE_CURRENT_SOURCE_DIR}/utilityFunctions.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/utilityFunctions.hpp ${CMAKE_CURRENT_SOURCE_DIR}/utilityFunctions.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/utilityFunctions.cpp ${CMAKE_CURRENT_SOURCE_DIR}/utilityFunctions.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/InputManager.hpp ${CMAKE_CURRENT_SOURCE_DIR}/InputManager.cpp
+
 
 
         PARENT_SCOPE

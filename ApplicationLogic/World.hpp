@@ -11,6 +11,7 @@
 #include "GameObject.hpp"
 #include "Shader.hpp"
 #include "Model.hpp"
+#include "Terrain.hpp"
 
 
 namespace TerrainDemo {
@@ -45,6 +46,10 @@ namespace TerrainDemo {
         int height;
         float timestep;
         float slideahead;
+        float cameraMouseSensitivity = 0.05f;
+        float cameraSpeed = 0.2f;
+        glm::vec2 prevMousePos;
+        Terrain* cuurentTerrain;
 
 
 
@@ -52,10 +57,17 @@ namespace TerrainDemo {
         void putshaders();
         void putCam();
         void putmodels();
+        void putTerrain();
 
+        void updateTerrain();
         void updateShaders();
         void updateObjects();
         void updateCamera();
+        void camerakeyboardUpdate(float cameraSpeed);
+        void cameraMouseUpdate(float sensivity);
+
+
+
 
 
 

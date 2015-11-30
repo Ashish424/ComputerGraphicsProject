@@ -75,7 +75,6 @@ target_link_libraries (CgProject
         "${PROJECT_SOURCE_DIR}/ExternalLibs/glew/1.12.0/lib/libGLEW.a"
         "${PROJECT_SOURCE_DIR}/ExternalLibs/assimp/3.1.1/lib/libassimp.3.1.1.dylib"
         "-lSOIL"
-#        "${PROJECT_SOURCE_DIR}/ExternalLibs/SOIL/lib/libSOIL.dylib"
         ${OPENGL_LIBRARIES}
         ${OpenCV_LIBRARIES}
 )

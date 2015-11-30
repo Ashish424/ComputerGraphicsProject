@@ -39,11 +39,17 @@ namespace TerrainDemo {
             return m_focusPoint;
         }
 
-        void setM_focusPoint(const glm::vec3 &m_focusPoint) {
+      glm::vec3 getM_forward() {
+          return m_forward;
+      }
+      void setM_focusPoint(const glm::vec3 &m_focusPoint) {
             MainCamera::m_focusPoint = m_focusPoint;
         }
 
-        void ApplyRotation(const glm::mat4 &transform);
+       glm::vec3 getM_up(){
+          return m_up;
+      }
+      void ApplyRotation(const glm::mat4 &transform);
 
     private:
         glm::mat4 m_perspective;

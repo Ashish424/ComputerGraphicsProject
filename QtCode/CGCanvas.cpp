@@ -3,8 +3,10 @@
 //
 
 #include "CGCanvas.hpp"
-#include <QDebug>
 
+#include <QKeyEvent>
+#include <QDebug>
+#include "ApplicationLogic/utils/InputManager.hpp"
 #include <opencv2/highgui.hpp>
 //TODO diable these debug macros
 #define DEBUG_TEMP
@@ -20,6 +22,8 @@ CGCanvas::CGCanvas(QWidget *parent):QOpenGLWidget(parent)
     timer = new QTimer(this);
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(FixedUpdate()));
     timer->start(timestep);
+    setFocusPolicy(Qt::FocusPolicy::ClickFocus);
+
 }
 
 CGCanvas::~CGCanvas()
@@ -122,6 +126,45 @@ void CGCanvas::FixedUpdate() {
 
     this->repaint();
 
+
+
+}
+
+void CGCanvas::keyPressEvent(QKeyEvent *event) {
+    QWidget::keyPressEvent(event);
+    if(event->key() == Qt::Key::Key_W)InputManager::setKey(InputManager::KEYS::W, true);
+    else if(event->key() == Qt::Key::Key_S)InputManager::setKey(InputManager::KEYS::S, true);
+    else if(event->key() == Qt::Key::Key_A)InputManager::setKey(InputManager::KEYS::A, true);
+    else if(event->key() == Qt::Key::Key_D)InputManager::setKey(InputManager::KEYS::D, true);
+
+}
+
+void CGCanvas::keyReleaseEvent(QKeyEvent *event) {
+    QWidget::keyReleaseEvent(event);
+    if(event->key() == Qt::Key::Key_W)InputManager::setKey(InputManager::KEYS::W, false);
+    else if(event->key() == Qt::Key::Key_S)InputManager::setKey(InputManager::KEYS::S, false);
+    else if(event->key() == Qt::Key::Key_A)InputManager::setKey(InputManager::KEYS::A, false);
+    else if(event->key() == Qt::Key::Key_D)InputManager::setKey(InputManager::KEYS::D, false);
+
+}
+
+
+void CGCanvas::mousePressEvent(QMouseEvent *ev) {
+    QWidget::mousePressEvent(ev);
+
+    qDebug("hello mouse press");
+//    InputManager::setMouseCoords(glm::vec2(ev->localPos().x(),ev->localPos().y()));
+
+
+}
+void CGCanvas::mouseReleaseEvent(QMouseEvent *ev) {
+    QWidget::mouseReleaseEvent(ev);
+    //TODO pass this info to camera Mouse movement
+
+}
+void CGCanvas::mouseMoveEvent(QMouseEvent *ev) {
+    QWidget::mouseMoveEvent(ev);
+    InputManager::setMouseCoords(glm::vec2(ev->localPos().x(), ev->localPos().y()),glm::vec2(width(),height()));
 
 
 }

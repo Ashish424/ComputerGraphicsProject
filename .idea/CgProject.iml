@@ -40,6 +40,8 @@
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/TransformData.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/TransformData.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/utils/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/utils/InputManager.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/utils/InputManager.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/utils/PerlinNoise.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/utils/PerlinNoise.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApplicationLogic/utils/utilityFunctions.cpp" isTestSource="false" />
