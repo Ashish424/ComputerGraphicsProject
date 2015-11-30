@@ -4,7 +4,8 @@
 
 #include "CGCanvas.hpp"
 #include <QDebug>
-
+#include <ApplicationLogic/utils/InputManager.hpp>
+#include <QKeyEvent>
 #include <opencv2/highgui.hpp>
 //TODO diable these debug macros
 #define DEBUG_TEMP
@@ -14,12 +15,16 @@
 
 #ifdef DEBUG_TEMP
 #include <QOpenGLContext>
+
+
 #endif
 CGCanvas::CGCanvas(QWidget *parent):QOpenGLWidget(parent)
 {
     timer = new QTimer(this);
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(FixedUpdate()));
     timer->start(timestep);
+    setFocusPolicy(Qt::FocusPolicy::ClickFocus);
+
 }
 
 CGCanvas::~CGCanvas()
@@ -121,5 +126,23 @@ void CGCanvas::FixedUpdate() {
     this->repaint();
 
 
+
+}
+
+void CGCanvas::keyPressEvent(QKeyEvent *event) {
+    QWidget::keyPressEvent(event);
+    if(event->key() == Qt::Key::Key_W)InputManager::setKey(InputManager::KEYS::W, true);
+    else if(event->key() == Qt::Key::Key_S)InputManager::setKey(InputManager::KEYS::S, true);
+    else if(event->key() == Qt::Key::Key_A)InputManager::setKey(InputManager::KEYS::A, true);
+    else if(event->key() == Qt::Key::Key_D)InputManager::setKey(InputManager::KEYS::D, true);
+
+}
+
+void CGCanvas::keyReleaseEvent(QKeyEvent *event) {
+    QWidget::keyReleaseEvent(event);
+    if(event->key() == Qt::Key::Key_W)InputManager::setKey(InputManager::KEYS::W, false);
+    else if(event->key() == Qt::Key::Key_S)InputManager::setKey(InputManager::KEYS::S, false);
+    else if(event->key() == Qt::Key::Key_A)InputManager::setKey(InputManager::KEYS::A, false);
+    else if(event->key() == Qt::Key::Key_D)InputManager::setKey(InputManager::KEYS::D, false);
 
 }

@@ -19,16 +19,17 @@ CoastlineAgent::~CoastlineAgent() {
 //
 
 void CoastlineAgent::doWork() {
-    srandom(time(NULL));
+    //srandom(time(NULL));
     int w = maxX - minX + 1;
     int h = maxY - minY + 1;
     if( w*h <= patchSize){
         int dir = (int) (random()%8);
         std::pair<int, int> point = choosePoint(dir);
+        std::pair<int, int> attr = std::make_pair(random()%(width), random()%(height));
+        std::pair<int, int> repul = std::make_pair(random()%(width), random()%(height));
         while(tokens > 0 && point.first != -1 && point.second != -1){
 
-            std::pair<int, int> attr = std::make_pair(random()%(width), random()%(height));
-            std::pair<int, int> repul = std::make_pair(random()%(width), random()%(height));
+
             double score = -1e9;
             int mxx=0,mxy=0;
             for(int j=0; j<8; j++){

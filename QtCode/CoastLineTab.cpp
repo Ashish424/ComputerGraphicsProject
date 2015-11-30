@@ -24,6 +24,8 @@ CoastLineTab::CoastLineTab(QWidget *parent) :
     //Image Properties
     connect(ui->widthSpinBox, SIGNAL(valueChanged(int)), this, SLOT(setImageWidth(int)));
     connect(ui->heightSpinBox, SIGNAL(valueChanged(int)), this, SLOT(setImageHeight(int)));
+    //TODO make it work
+    connect(ui->showOriginalCheckBox, SIGNAL(), this, SLOT());
 
     //Filter Properties
     connect(ui->gaussBlurSlider, SIGNAL(valueChanged(int)), this, SLOT(applyFilters()));
@@ -69,11 +71,15 @@ void CoastLineTab::generate() {
     agent = new CoastlineAgent(tokens, imageHeight, imageWidth);
     CoastlineAgent::setThresholdValue(agentThershold);
     CoastlineAgent::setPatchSize(patchSize);
+    srandom(time(NULL));
     agent->doWork();
 
     originalImage = agent->getImage();
 
     applyFilters();
+
+    // deallocating agent
+    delete agent;
 }
 
 void CoastLineTab::applyFilters() {
@@ -118,4 +124,8 @@ void CoastLineTab::applyFilters() {
     cv::resize(outputImage, output, cv::Size(outputHeight,outputWidth));
     QImage qimg((uchar*)output.data, output.cols, output.rows, output.step, QImage::Format_Grayscale8);
     ui->rasterLabel->setPixmap(QPixmap::fromImage(qimg));
+
+    emit coastlineImageChanged(outputImage.clone());
+
 }
+

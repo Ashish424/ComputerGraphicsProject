@@ -6,10 +6,11 @@
 #include <qlogging.h>
 #include <iostream>
 #include <ApplicationLogic/utils/PerlinNoise.hpp>
+#include <opencv2/imgproc.hpp>
 #include "MountainAgent.hpp"
 
 #define __SUP_HEIGHT__ 400
-
+uchar MountainAgent::bgColor = 0;
 MountainAgent::MountainAgent(int tokens, cv::Mat &img, std::pair<int, int> startingPoint, int changeDirection): Agent(tokens) {
     assert(img.channels() == 1);
     image = img;
@@ -17,62 +18,9 @@ MountainAgent::MountainAgent(int tokens, cv::Mat &img, std::pair<int, int> start
     changeDirc = changeDirection;
 }
 
-void MountainAgent::makeMountains(cv::Mat &image, uchar color) {
-    cv::Mat dis = cv::Mat::zeros(image.rows,image.cols, CV_32FC1);
-    std::vector< std::pair<int, int> > curve;
-    for(int i=0; i<image.rows; i++){
-        for(int j=0; j<image.cols; j++){
-            if(image.at<uchar>(i, j) == 255){
-                curve.push_back(std::make_pair(j, i));
-            }
-        }
-    }
-    PerlinNoise n[3];
-    for(int i=0; i<3; i++)n[i]=PerlinNoise((unsigned int) random());
-    float max_dis=0;
-    for(int y = 0; y < image.rows; y++){
-        for(int x = 0; x < image.cols; x++){
-            float distance = 1e9;
-            if(image.at<uchar>(y, x) == 0){
-                dis.at<float>(y, x) = 0;
-                continue;
-            }
-            for(int z = 0; z < curve.size(); z++){
-                float nx = curve[z].first;
-                float ny = curve[z].second;
-                float d = sqrtf((x-nx)*(x-nx) + (y-ny)*(y-ny));
-                distance = std::min(distance,d);
-            }
-            dis.at<float>(y, x) = distance;
-            max_dis = std::max(max_dis, distance);
-        }
-    }
-
-    for(int i=0; i<image.rows; i++){
-        for(int j=0; j< image.cols; j++){
-            if(dis.at<float>(i,j) == 0 && image.at<uchar>(i, j) == 0){
-                image.at<uchar>(i, j) = 0;
-                continue;
-            }
-            dis.at<float>(i, j) /= max_dis;
-            dis.at<float>(i, j) = 1 - dis.at<float>(i, j);
-            //TODO have different falloff functions here
-            image.at<uchar>(i, j) = (uchar) (255 * dis.at<float>(i, j));
-            float ans = image.at<uchar>(i,j);
-            ans /= __SUP_HEIGHT__;
-            float x = j;x/=image.cols;
-            float y = i;y/=image.rows;
-            for(int k=1; k<4; k++){
-                float f =  k + 10;
-                float a = 2*k*k + 3;
-                ans += 1/f*n[0].noise(x*a,y*a,0.8);
-            }
-            ans = std::min(ans,1.0f);
-            ans *= 255;
-
-            image.at<uchar>(i, j) = (uchar) ans;
-        }
-    }
+void MountainAgent::makeMountains(cv::Mat &image) {
+    cv::distanceTransform(image, image, CV_DIST_L2, 3);
+    cv::normalize(image, image, 0, 1., cv::NORM_MINMAX);
 }
 
 void MountainAgent::doWork() {
@@ -85,27 +33,31 @@ void MountainAgent::doWork() {
     srandom((unsigned int) time(NULL));
     while(tokens--){
 
-
-
         if(chngCount==0){
             float d = random()%100+1;
-            direction += M_PI/8 - (addDirection * d)/ 100;
+            direction += randomAngle(-M_PI/4, M_PI/4);
             //std::cerr<< d <<"\n";
             chngCount = changeDirc;
         }
 
-        float d = random()%100+1;
-        direction += M_PI/100 - ((M_PI/50) * d)/ 100;
+        direction += randomAngle(-M_PI/100,M_PI/100);
         chngCount--;
-        int x = _x, y = _y;
-        assert(x >=0 && y >= 0 && x < image.cols && y < image.rows);
-        while(_x >= image.cols || _y >= image.rows || _x < 0 || _y < 0 || image.at<uchar>((int) _y, (int) _x) == 0){
+        //std::cerr<<x<<" "<<y<<"\n";
+        while(_x >= image.cols || _y >= image.rows || _x < 0 || _y < 0){
             _x = random()%image.cols;
             _y = random()%image.rows;
         }
-        image.at<uchar>(y, x) = 255;
+
+        int x = (int) _x, y = (int) _y;
+        assert(_x >=0 && _y >= 0 && x < image.cols && y < image.rows);
+        image.at<uchar>(y, x) = bgColor;
         _x += sinf(direction);
         _y += cosf(direction);
 
     }
+}
+
+double MountainAgent::randomAngle(double a, double b) {
+    double X = ((double)rand())/(double)RAND_MAX;
+    return a + (b - a) * X;
 }

@@ -14,10 +14,12 @@ private:
     cv::Mat image;
     std::pair<int ,int> point;
     int changeDirc;
+    double randomAngle(double a, double b);
+    static uchar bgColor;
 public:
     void doWork();
     MountainAgent(int tokens, cv::Mat &img, std::pair<int, int> startingPoint, int changeDirection);
-    static void makeMountains(cv::Mat &image, uchar color);
+    static void makeMountains(cv::Mat &image);
 };
 
 

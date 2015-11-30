@@ -20,7 +20,12 @@ Q_OBJECT
 
 public:
     explicit CoastLineTab(QWidget *parent = 0);
+
     ~CoastLineTab();
+
+signals:
+    void coastlineImageChanged(cv::Mat);
+
 private slots:
     void setTokensValue(int value);
     void setPatchSizeValue(int value);
