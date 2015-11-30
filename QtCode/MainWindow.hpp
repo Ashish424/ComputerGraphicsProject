@@ -6,6 +6,7 @@
 #define CGPROJECT_MAINWINDOW_HPP
 
 #include <QMainWindow>
+#include "CGCanvas.hpp"
 
 namespace Ui {
     class MainWindow;
@@ -21,6 +22,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
 };
 
 

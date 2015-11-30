@@ -28,8 +28,13 @@ protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
-
-private slots:
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+    //mouse events
+    void mousePressEvent(QMouseEvent *ev);
+    void mouseReleaseEvent(QMouseEvent *ev);
+    void mouseMoveEvent(QMouseEvent *ev);
+ private slots:
     void FixedUpdate();
 
 protected:

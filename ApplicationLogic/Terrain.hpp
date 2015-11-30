@@ -9,29 +9,40 @@
 #include <ApplicationLogic/utils/PerlinNoise.hpp>
 #include <functional>
 #include "Model.hpp"
+#include "Textures.hpp"
 namespace TerrainDemo {
+    enum class TerrainDrawMode {WIREFRAME,FILLED };
     class Terrain : public Model {
 
 
     public:
-        Terrain(const MainCamera *cam,
-                           const TransformData &transdata,
-                           Shader *shader,
-                           unsigned int dimX,
-                           unsigned int dimZ,
-                           double maxHeight,
-                           const std::string &heightImage,
-                           std::function<void(Terrain *)> updateTerrainShader);
-        //TODO remove refactor this
-        void updateHeightMap();
+      Terrain(const MainCamera *cam,
+                       const TransformData &transdata,
+                       Shader *shader,
+                       unsigned int dimension,
+                       const std::string & heightmap,
+                       const std::vector<std::string> & textures,
+                       const TerrainDrawMode &mode,
+                       std::function<void(Terrain *)> updateTerrainShader);
 
 
+
+      //GUI event handlers
+        void updateHeightMap(const cv::Mat &updatedData);
+        void setDrawMode(const TerrainDrawMode & mode);
+        void setMinMaxTesselationFactors(int MinTess,int MaxTess);
 
     private:
         const glm::vec3 corner;
-        GLuint dimX,dimZ;
+        GLuint dimension;
         GLdouble maxHeight;
-        cv::Mat heightMap;
+        Textures heightmap;
+        Textures textures;
+        TerrainDrawMode drawMode;
+        std::function<void(Terrain*)> updateTerrainShader;
+
+
+
       //vector of vectors for terrain
       std::vector< std::vector< glm::vec3> > VertexData;
       std::vector< std::vector<glm::vec3> > FinalNormals;
@@ -39,31 +50,9 @@ namespace TerrainDemo {
 
         virtual void DrawGameObject() override;
         virtual void InputUpdate() ;
-        //helper method for loading image
-        //TODO add this functionality
-        cv::Mat loadImage(const std::string &filepath);
 
-        enum{
-            POSITION,
-            NORMAL,
-            TEXTCORD,
-            ELEMENT_BUFFER,
-            NUM_BUFFERS
 
-        };
-        GLuint vertexBuffers[NUM_BUFFERS];
-        //TODO form texture class
-        GLuint texture;
-        std::function<void(Terrain*)> updateTerrainShader;
 
-        //helper methods
-
-        //updates normals and heights of vertices
-        void updatePositionData(const cv::Mat &img);
-        void updateNormalData();
-        void linearizeData(std::vector<glm::vec3> &linearVertexData, std::vector<glm::vec3> &linearNormalData) const;
-        //TODO temp var for perlin noise
-        PerlinNoise pnoise[4];
 
         //helper method for instances
         friend void updateTerrainShader1(Terrain* terr);

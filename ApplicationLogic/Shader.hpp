@@ -39,7 +39,7 @@ public:
         void (*update_fp)(TerrainDemo::MainCamera &, TerrainDemo::Shader &),
         MainCamera &mainCamera);
 
-    GLuint getLocation(std::string &name);
+    GLuint getLocation(const std::string &name);
 
 private:
     static std::string LoadShader(const std::string& fileName);

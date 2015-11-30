@@ -3,9 +3,10 @@
 //
 
 #include "CGCanvas.hpp"
-#include <QDebug>
-#include <ApplicationLogic/utils/InputManager.hpp>
+
 #include <QKeyEvent>
+#include <QDebug>
+#include "ApplicationLogic/utils/InputManager.hpp"
 #include <opencv2/highgui.hpp>
 //TODO diable these debug macros
 #define DEBUG_TEMP
@@ -15,8 +16,6 @@
 
 #ifdef DEBUG_TEMP
 #include <QOpenGLContext>
-
-
 #endif
 CGCanvas::CGCanvas(QWidget *parent):QOpenGLWidget(parent)
 {
@@ -42,10 +41,12 @@ void CGCanvas::paintGL()
 {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glEnable(GL_DEPTH_TEST);
+
 // Accept fragment if it closer to the camera than the former one
     //TODO see less equal vs less
-    glDepthFunc(GL_LESS);
+    glDepthFunc(GL_LEQUAL);
 
 
 
@@ -79,12 +80,12 @@ void CGCanvas::initializeGL()
     glClearColor(0.0f,0.0f,0.0f,1.0f);
 
     world = new TerrainDemo::World(width(), height(), timestep);
-    glm::vec3 pos = glm::vec3(0.0,0.0,0.0);
-    glm::vec3 scale  = glm::vec3(1.0,1.0,1.0);
-    glm::vec3 rot = glm::vec3(0.0,0.0,0.0);
+//    glm::vec3 pos = glm::vec3(0.0,0.0,0.0);
+//    glm::vec3 scale  = glm::vec3(1.0,1.0,1.0);
+//    glm::vec3 rot = glm::vec3(0.0,0.0,0.0);
 
 
-    TransformData t1(pos,rot,scale);
+//    TransformData t1(pos,rot,scale);
 //    pnoise = PerlinNoise(time(NULL));
 //    img = cv::Mat::zeros(300,300,CV_8UC1);
 //    tt=0.1;
@@ -144,5 +145,26 @@ void CGCanvas::keyReleaseEvent(QKeyEvent *event) {
     else if(event->key() == Qt::Key::Key_S)InputManager::setKey(InputManager::KEYS::S, false);
     else if(event->key() == Qt::Key::Key_A)InputManager::setKey(InputManager::KEYS::A, false);
     else if(event->key() == Qt::Key::Key_D)InputManager::setKey(InputManager::KEYS::D, false);
+
+}
+
+
+void CGCanvas::mousePressEvent(QMouseEvent *ev) {
+    QWidget::mousePressEvent(ev);
+
+    qDebug("hello mouse press");
+//    InputManager::setMouseCoords(glm::vec2(ev->localPos().x(),ev->localPos().y()));
+
+
+}
+void CGCanvas::mouseReleaseEvent(QMouseEvent *ev) {
+    QWidget::mouseReleaseEvent(ev);
+    //TODO pass this info to camera Mouse movement
+
+}
+void CGCanvas::mouseMoveEvent(QMouseEvent *ev) {
+    QWidget::mouseMoveEvent(ev);
+    InputManager::setMouseCoords(glm::vec2(ev->localPos().x(), ev->localPos().y()),glm::vec2(width(),height()));
+
 
 }

@@ -161,7 +161,7 @@ void TerrainDemo::Shader::update(void (*update_fp)(TerrainDemo::MainCamera &, Te
 
 }
 
-GLuint TerrainDemo::Shader::getLocation(std::string &name) {
+GLuint TerrainDemo::Shader::getLocation(const std::string &name) {
 
     return uniformsMap[name];
 }
