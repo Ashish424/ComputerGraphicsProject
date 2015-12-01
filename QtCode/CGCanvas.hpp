@@ -37,10 +37,7 @@ protected:
  private slots:
     void FixedUpdate();
 
-protected:
-    virtual void keyPressEvent(QKeyEvent *keyEvent) override;
 
-    virtual void keyReleaseEvent(QKeyEvent *keyEvent) override;
 
 private:
 

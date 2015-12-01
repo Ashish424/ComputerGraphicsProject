@@ -101,12 +101,13 @@ namespace TerrainDemo {
         //texture uniforms
         uniformsVec[TerrainShader].push_back("heightMapDisplacer");
 
+        uniformsVec[TerrainShader].push_back("textureSamplers[0]");
+        uniformsVec[TerrainShader].push_back("textureSamplers[1]");
+        uniformsVec[TerrainShader].push_back("textureSamplers[2]");
 
 
 
 
-        //TODO remove this uniform
-        uniformsVec[TerrainShader].push_back("tester");
 
 
 
@@ -156,28 +157,17 @@ namespace TerrainDemo {
         TransformData t1(pos, rot, scale);
 
 
-        std::string heightmapPath("./Assets/testHeightmap.png");
-        std::vector<std::string> textures;
+
+
 
 //        objects.push_back(
-//            new Terrain(this->cam,
-//                        t1,
-//                        this->shaders[TerrainShader],
-//                        64,
-//                        heightmapPath,
-//                        textures,
-//                        TerrainDrawMode::WIREFRAME,
-//                        &updateTerrainShader1));
-
-
-        objects.push_back(
-            new Grid(this->cam,
-                     t1,
-                     this->shaders[BasicShader],
-                     0.1f,
-                     20,
-                     glm::vec4(1.0f, 0.5f, 0.5f, 1.0f),
-                     &updateGridShader1));
+//            new Grid(this->cam,
+//                     t1,
+//                     this->shaders[BasicShader],
+//                     0.1f,
+//                     20,
+//                     glm::vec4(1.0f, 0.5f, 0.5f, 1.0f),
+//                     &updateGridShader1));
 
 
 
@@ -246,9 +236,15 @@ void World::putTerrain() {
     TransformData t1(pos, rot, scale);
 
 
-    std::string heightmapPath("./Assets/testHeightmap.png");
+    std::string heightmapPath("./Assets/testHeightmapNew.png");
     std::vector<std::string> textures;
-    textures.push_back("./Assets/bricks.jpg");
+    textures.push_back("./Assets/display/fungus.jpg");
+    textures.push_back("./Assets/display/sand_grass_02.jpg");
+    textures.push_back("./Assets/display/rock_2_4w.jpg");
+
+
+
+
 
 
     this->cuurentTerrain = new Terrain(this->cam,
@@ -257,7 +253,7 @@ void World::putTerrain() {
                 64,
                 heightmapPath,
                 textures,
-                TerrainDrawMode::FILLED,
+                TerrainDrawMode::WIREFRAME,
                 &updateTerrainShader1);
 
 }
@@ -297,19 +293,33 @@ void World::camerakeyboardUpdate(float cameraSpeed) {
 void World::cameraMouseUpdate(float sensivity) {
 
     //TODO rotate camera based on the mouse movement
-    glm::vec2 MousePos = InputManager::getMouseCoords();
-    glm::vec2 deltaMovement = MousePos-prevMousePos;
-    prevMousePos  = MousePos;
+
+
+    //returns true only when pressed
+    if(InputManager::getMousePressed()){
+        prevMousePos  = InputManager::getMouseCoords();
+
+
+    }
+
+
+    if(InputManager::getMouseMoving()){
+
+        glm::vec2 MousePos = InputManager::getMouseCoords();
+        glm::vec2 deltaMovement = MousePos-prevMousePos;
+        glm::mat4 rotor;
+        rotor = glm::rotate(rotor,-deltaMovement.y*sensivity,glm::cross(cam->getM_up(), -cam->getM_forward()));
+        cam->ApplyRotation(rotor);
+        glm::mat4 rotor2;
+        rotor2 = glm::rotate(rotor2,-deltaMovement.x*sensivity,glm::vec3(0.0,1.0,0.0));
+
+        cam->ApplyRotation(rotor2);
+
+
+    }
 
 
 
-    glm::mat4 rotor;
-    rotor = glm::rotate(rotor,-deltaMovement.y,glm::cross(cam->getM_up(), -cam->getM_forward()));
-    cam->ApplyRotation(rotor);
-    glm::mat4 rotor2;
-    rotor2 = glm::rotate(rotor2,-deltaMovement.x,glm::vec3(0.0,1.0,0.0));
-
-    cam->ApplyRotation(rotor2);
 
 }
 }

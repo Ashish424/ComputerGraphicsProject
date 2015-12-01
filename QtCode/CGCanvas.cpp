@@ -151,19 +151,23 @@ void CGCanvas::keyReleaseEvent(QKeyEvent *event) {
 
 void CGCanvas::mousePressEvent(QMouseEvent *ev) {
     QWidget::mousePressEvent(ev);
+    InputManager::setMousePressed(true);
+    InputManager::setMouseCoords(glm::vec2(ev->localPos().x(), ev->localPos().y()),glm::vec2(width(),height()));
 
-    qDebug("hello mouse press");
-//    InputManager::setMouseCoords(glm::vec2(ev->localPos().x(),ev->localPos().y()));
 
 
 }
 void CGCanvas::mouseReleaseEvent(QMouseEvent *ev) {
     QWidget::mouseReleaseEvent(ev);
-    //TODO pass this info to camera Mouse movement
+    InputManager::setMousePressed(false);
+    InputManager::setMouseMoved(false);
+
 
 }
 void CGCanvas::mouseMoveEvent(QMouseEvent *ev) {
     QWidget::mouseMoveEvent(ev);
+    InputManager::setMousePressed(false);
+    InputManager::setMouseMoved(true);
     InputManager::setMouseCoords(glm::vec2(ev->localPos().x(), ev->localPos().y()),glm::vec2(width(),height()));
 
 

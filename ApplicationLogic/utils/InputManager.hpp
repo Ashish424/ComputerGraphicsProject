@@ -31,11 +31,23 @@ class InputManager {
   static void setKey(KEYS k, bool val){
       keys[k] = val;
   }
+  static void setMousePressed(bool val);
+  static bool getMousePressed() {
+      return MousePressed;
+
+  }
+  static bool  getMouseMoving(){
+      return mouseMoved;
+  }
+  void static setMouseMoved(bool val);
 
  private:
   static bool keys[KEYS::COUNT];
   static glm::vec2 mousePos;
   static glm::vec2 screenInfo;
+  static bool MousePressed;
+  static bool mouseMoved;
+
 };
 
 

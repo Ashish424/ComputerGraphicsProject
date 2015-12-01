@@ -18,6 +18,7 @@ in TCS_OUT
 out TCS_OUT
 {
     vec2 texCoords;
+    float myHeight;
 } tes_out;
 
 
@@ -50,6 +51,9 @@ void main() {
 
 
    p.y += texture(heightMapDisplacer, tc).r * heightMapdepth;
+   tes_out.myHeight = p.y;
+
+
 
 
 

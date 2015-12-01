@@ -66,8 +66,7 @@ namespace TerrainDemo {
 
 void Terrain::DrawGameObject() {
 
-//TODO set the required uniform vars in Terrain Shader
-//
+
 
 
 
@@ -76,19 +75,28 @@ void Terrain::DrawGameObject() {
 
 
 
-        //TODO update shaders here
+
         this->shader->Use();
         //TODO update geometry here
-        // TODO update heightmap here
+
         std::string heightUniform("heightMapDisplacer");
         heightmap.Bind(this->shader,0,heightUniform,0);
 
 
-        std::string textureTes("tester");
-        textures.Bind(this->shader,1,textureTes,0);
+        std::string textureSampler0("textureSamplers[0]");
+        std::string textureSampler1("textureSamplers[1]");
+        std::string textureSampler2("textureSamplers[2]");
 
-        //TODO update textures here
-        // textures.Bind(this->shader)
+
+
+        textures.Bind(this->shader,1,textureSampler0,0);
+        textures.Bind(this->shader,2,textureSampler1,1);
+        textures.Bind(this->shader,3,textureSampler2,2);
+
+
+
+    //TODO update textures here
+
 
         this->updateTerrainShader(this);
          if(drawMode == TerrainDrawMode::WIREFRAME){
