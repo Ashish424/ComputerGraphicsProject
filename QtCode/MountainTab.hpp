@@ -33,7 +33,7 @@ private:
     int distToChangeDirection;
     int outputHeight;
     int outputWidth;
-    bool checkImage(cv::Mat);
+
 private slots:
     void setTokenValue();
     void setStartingPoint();

@@ -7,6 +7,7 @@
 #include "coastlinetab.hpp"
 #include "CGCanvas.hpp"
 #include "MountainTab.hpp"
+#include "TerrainDisplayTab.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
@@ -17,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     MountainTab* mountainTab = new MountainTab();
     ui->tabWidget->addTab(coastLineTab, "Coastline");
     ui->tabWidget->addTab(mountainTab, "Mountain");
-    ui->tabWidget->addTab(new CGCanvas(), "CGCanvas");
+    ui->tabWidget->addTab(new TerrainDisplayTab(), "CGCanvas");
 
     connect(coastLineTab, SIGNAL(coastlineImageChanged(cv::Mat)), mountainTab, SLOT(setChangedImage(cv::Mat)));
 }

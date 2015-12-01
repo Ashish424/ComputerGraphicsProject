@@ -7,19 +7,19 @@
 
 #include <QWidget>
 namespace Ui {
-class CoastLineTab;
+class TerrainDisplayTab;
 }
 
 class TerrainDisplayTab : public QWidget
 {
  Q_OBJECT
 
- public:
-  explicit TerrainDisplayTab(QWidget *parent = 0);
-  ~TerrainDisplayTab();
+public:
+    explicit TerrainDisplayTab(QWidget *parent = 0);
+    ~TerrainDisplayTab();
 
  private:
-  Ui::CoastLineTab *ui;
+  Ui::TerrainDisplayTab *ui;
 };
 
 

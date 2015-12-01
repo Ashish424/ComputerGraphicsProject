@@ -16,6 +16,12 @@ MountainAgent::MountainAgent(int tokens, cv::Mat &img, std::pair<int, int> start
     image = img;
     point = startingPoint;
     changeDirc = changeDirection;
+    isBG = cv::Mat::zeros(img.rows, img.cols, CV_8UC1);
+    for(int r=0; r<img.rows; r++){
+        for(int c=0; c<img.cols; c++){
+            isBG.at<uchar>(r,c) = (uchar) ((img.at<uchar>(r, c) == 0) ? 1 : 0);
+        }
+    }
 }
 
 void MountainAgent::makeMountains(cv::Mat &image) {
@@ -24,6 +30,8 @@ void MountainAgent::makeMountains(cv::Mat &image) {
 }
 
 void MountainAgent::doWork() {
+
+
     float direction = M_PI/4;
     float addDirection = M_PI/4;
     float _x = point.first;
@@ -42,10 +50,13 @@ void MountainAgent::doWork() {
 
         direction += randomAngle(-M_PI/100,M_PI/100);
         chngCount--;
-        //std::cerr<<x<<" "<<y<<"\n";
-        while(_x >= image.cols || _y >= image.rows || _x < 0 || _y < 0){
+        int countLoop = 0;
+        //std::cerr<<image.rows<<" "<<image.cols<<"\n";
+        while(_x >= image.cols || _y >= image.rows || _x < 0 || _y < 0 || isBG.at<uchar>(_y, _x) == 1){
             _x = random()%image.cols;
             _y = random()%image.rows;
+            countLoop++;
+            if(countLoop > image.rows * image.cols)return;
         }
 
         int x = (int) _x, y = (int) _y;

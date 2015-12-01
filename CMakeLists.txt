@@ -16,7 +16,7 @@ set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /opt/local/lib)
 set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} /usr/local/include)
 set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} /usr/local/Cellar/)
 
-set(SOURCE_FILES main.cpp ApplicationLogic/Agents/MountainAgent.cpp ApplicationLogic/Agents/MountainAgent.hpp QtCode/CoastLineTab.cpp QtCode/CoastLineTab.hpp QtCode/ui_coastlinetab.hpp QtCode/ui_mainwindow.hpp QtCode/MainWindow.cpp QtCode/MainWindow.hpp ApplicationLogic/utils/InputManager.hpp ApplicationLogic/utils/InputManager.cpp ApplicationLogic/utils/InputManager.hpp QtCode/MountainTab.cpp QtCode/MountainTab.hpp QtCode/ui_mountaintab.hpp)
+set(SOURCE_FILES main.cpp ApplicationLogic/Agents/MountainAgent.cpp ApplicationLogic/Agents/MountainAgent.hpp QtCode/CoastLineTab.cpp QtCode/CoastLineTab.hpp QtCode/ui_coastlinetab.hpp QtCode/ui_mainwindow.hpp QtCode/MainWindow.cpp QtCode/MainWindow.hpp ApplicationLogic/utils/InputManager.hpp ApplicationLogic/utils/InputManager.cpp ApplicationLogic/utils/InputManager.hpp QtCode/MountainTab.cpp QtCode/MountainTab.hpp QtCode/ui_mountaintab.hpp QtCode/TerrainDisplayTab.cpp QtCode/TerrainDisplayTab.hpp QtCode/ui_terraindisplaytab.hpp)
 
 
 #TODO make the project cross platform compatible by using GLint instead of ints

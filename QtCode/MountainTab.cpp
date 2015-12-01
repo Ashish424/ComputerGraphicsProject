@@ -45,9 +45,9 @@ void MountainTab::setDistanceToChangeDirection() {
 }
 
 void MountainTab::commputeMatVector() {
-    if(!checkImage(originalImage))return;
+    if(originalImage.empty())return;
     outputImage = originalImage.clone();
-    agent = new MountainAgent(tokenValue,outputImage, startingPoint,distToChangeDirection);
+    agent = new MountainAgent(tokenValue, outputImage, startingPoint, distToChangeDirection);
     agent->doWork();
     images.clear();
     MountainAgent::makeMountains(outputImage);
@@ -59,7 +59,8 @@ void MountainTab::commputeMatVector() {
         cv::Mat im = originalImage.clone();
         int multi = ui->tokenMultiQSpinBox->value();
         tok += tokenValue*multi;
-        agent = new MountainAgent(tok , im,std::make_pair(0,0),distToChangeDirection);
+        agent = new MountainAgent(tok ,im ,std::make_pair(0,0), distToChangeDirection);
+        agent->doWork();
         MountainAgent::makeMountains(im);
         images.push_back(im);
         delete agent;
@@ -68,7 +69,7 @@ void MountainTab::commputeMatVector() {
 
 void MountainTab::setChangedImage(cv::Mat mat){
     originalImage = mat;
-    if(!checkImage(mat))return;
+    if(originalImage.empty())return;
     commputeMatVector();
     applyChanges();
 }
@@ -115,16 +116,7 @@ void MountainTab::setSlider(double d) {
 }
 
 void MountainTab::generate() {
-    if(!checkImage(originalImage))return;
+    if(originalImage.empty())return;
     commputeMatVector();
     applyChanges();
-}
-
-bool MountainTab::checkImage(cv::Mat mat) {
-    for(int r=0; r<mat.rows; r++){
-        for(int c=0; c<mat.cols; c++){
-            if(mat.at<uchar>(r,c) != 0)return true;
-        }
-    }
-    return false;
 }

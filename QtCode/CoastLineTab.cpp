@@ -73,7 +73,6 @@ void CoastLineTab::generate() {
     CoastlineAgent::setPatchSize(patchSize);
     srandom(time(NULL));
     agent->doWork();
-
     originalImage = agent->getImage();
 
     applyFilters();
@@ -87,6 +86,7 @@ void CoastLineTab::applyFilters() {
 //    std::cerr<<"Here";
 //    std::cerr<<originalImage.rows<<" "<<originalImage.cols<<" "<<ui->gaussBlurSlider->value()<<"\n";
 //    //
+    //std::cerr<<"ashakjs";
     int kernalSize = ui->gaussBlurSlider->value()|1;
     double sigmaX = ui->sigmaXSpinBox->value();
     double sigmaY = ui->sigmaYSpinBox->value();

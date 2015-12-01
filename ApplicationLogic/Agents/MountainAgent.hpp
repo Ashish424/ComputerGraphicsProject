@@ -16,6 +16,7 @@ private:
     int changeDirc;
     double randomAngle(double a, double b);
     static uchar bgColor;
+    cv::Mat isBG;
 public:
     void doWork();
     MountainAgent(int tokens, cv::Mat &img, std::pair<int, int> startingPoint, int changeDirection);

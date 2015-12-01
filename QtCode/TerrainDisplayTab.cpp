@@ -4,13 +4,16 @@
 
 #include "TerrainDisplayTab.hpp"
 #include "ui_terraindisplaytab.hpp"
+#include "CGCanvas.hpp"
+
 TerrainDisplayTab::TerrainDisplayTab(QWidget *parent) : QWidget(parent),
-    ui(new Ui::CoastLineTab)
+    ui(new Ui::TerrainDisplayTab)
 {
     ui->setupUi(this);
+    //ui->renderWidget = new CGCanvas();
+    //ui->renderWidget->setFocus();
 }
 
-CoastLineTab::~CoastLineTab()
-{
-    delete ui;
+TerrainDisplayTab::~TerrainDisplayTab() {
+
 }

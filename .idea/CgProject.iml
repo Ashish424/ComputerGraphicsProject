@@ -60,21 +60,24 @@
       <sourceFolder url="file://$MODULE_DIR$/QtCode/MainWindow.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/QtCode/MountainTab.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/QtCode/MountainTab.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/QtCode/TerrainDisplayTab.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/QtCode/TerrainDisplayTab.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/QtCode/ui_coastlinetab.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/QtCode/ui_mainwindow.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/QtCode/ui_mountaintab.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/QtCode/ui_terraindisplaytab.hpp" isTestSource="false" />
     </content>
-    <content url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/Debug/CgProject_automoc.cpp">
-      <sourceFolder url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/Debug/CgProject_automoc.cpp" isTestSource="false" />
+    <content url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/Debug/CgProject_automoc.cpp">
+      <sourceFolder url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/Debug/CgProject_automoc.cpp" isTestSource="false" />
     </content>
-    <content url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/MinSizeRel/CgProject_automoc.cpp">
-      <sourceFolder url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/MinSizeRel/CgProject_automoc.cpp" isTestSource="false" />
+    <content url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/MinSizeRel/CgProject_automoc.cpp">
+      <sourceFolder url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/MinSizeRel/CgProject_automoc.cpp" isTestSource="false" />
     </content>
-    <content url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/RelWithDebInfo/CgProject_automoc.cpp">
-      <sourceFolder url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/RelWithDebInfo/CgProject_automoc.cpp" isTestSource="false" />
+    <content url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/RelWithDebInfo/CgProject_automoc.cpp">
+      <sourceFolder url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/RelWithDebInfo/CgProject_automoc.cpp" isTestSource="false" />
     </content>
-    <content url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/Release/CgProject_automoc.cpp">
-      <sourceFolder url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/Release/CgProject_automoc.cpp" isTestSource="false" />
+    <content url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/Release/CgProject_automoc.cpp">
+      <sourceFolder url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/Release/CgProject_automoc.cpp" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -255,10 +258,10 @@
           <root url="file:///System/Library/Frameworks/VideoToolbox.framework/Headers" />
           <root url="file:///System/Library/Frameworks/vmnet.framework/Headers" />
           <root url="file:///System/Library/Frameworks/WebKit.framework/Headers" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/Debug" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/MinSizeRel" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/Release" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/RelWithDebInfo" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/Debug" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/MinSizeRel" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/Release" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/RelWithDebInfo" />
           <root url="file://$USER_HOME$/Qt5.5.0/5.5/clang_64/lib/Enginio.framework/Headers" />
           <root url="file://$USER_HOME$/Qt5.5.0/5.5/clang_64/lib/Qt3DCore.framework/Headers" />
           <root url="file://$USER_HOME$/Qt5.5.0/5.5/clang_64/lib/Qt3DInput.framework/Headers" />
@@ -487,10 +490,10 @@
           <root url="file:///System/Library/Frameworks/VideoToolbox.framework/Headers" />
           <root url="file:///System/Library/Frameworks/vmnet.framework/Headers" />
           <root url="file:///System/Library/Frameworks/WebKit.framework/Headers" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/Debug" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/MinSizeRel" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/Release" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/RelWithDebInfo" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/Debug" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/MinSizeRel" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/Release" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/RelWithDebInfo" />
           <root url="file://$USER_HOME$/Qt5.5.0/5.5/clang_64/lib/Enginio.framework/Headers" />
           <root url="file://$USER_HOME$/Qt5.5.0/5.5/clang_64/lib/Qt3DCore.framework/Headers" />
           <root url="file://$USER_HOME$/Qt5.5.0/5.5/clang_64/lib/Qt3DInput.framework/Headers" />
@@ -545,10 +548,10 @@
           <root url="file:///usr/local/include" />
         </SOURCES>
         <excluded>
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/Debug/CgProject_automoc.cpp" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/MinSizeRel/CgProject_automoc.cpp" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/Release/CgProject_automoc.cpp" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/cb364e04/cb364e04/RelWithDebInfo/CgProject_automoc.cpp" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/Debug/CgProject_automoc.cpp" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/MinSizeRel/CgProject_automoc.cpp" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/Release/CgProject_automoc.cpp" />
+          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/3372ff91/3372ff91/RelWithDebInfo/CgProject_automoc.cpp" />
         </excluded>
       </library>
     </orderEntry>
