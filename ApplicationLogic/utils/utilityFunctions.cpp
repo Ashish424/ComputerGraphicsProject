@@ -89,12 +89,20 @@ namespace TerrainDemo {
     glUniformMatrix4fv(hold_view, 1, GL_FALSE, &getView[0][0]);
     glUniformMatrix4fv(hold_model, 1, GL_FALSE, &model[0][0]);
     //update the uniforms
+    float terrainHeight  = terr->getMaxHeight();
+    float minTesslevel = terr->MinTess;
+    float maxTesslevel = terr->MaxTess;
+    float fixTessLevel = terr->FixedTess+1;
+    float doCameraTessel = terr->isCameraBased;
+
+
+
     glUniform3fv(hold_cameraPos,1,&cameraPos[0]);
-    glUniform1f(hold_doCameraTessel,0.75f);
-    glUniform1f(hold_minTessLevel,1);
-    glUniform1f(hold_maxTessLevel,10);
-    glUniform1f(hold_fixedTessLevel,1);
-    glUniform1f(hold_heightMapdepth,10);
+    glUniform1f(hold_doCameraTessel,doCameraTessel);
+    glUniform1f(hold_minTessLevel,minTesslevel);
+    glUniform1f(hold_maxTessLevel,maxTesslevel);
+    glUniform1f(hold_fixedTessLevel,fixTessLevel);
+    glUniform1f(hold_heightMapdepth,terrainHeight);
     glUniform1f(hold_dimension,terr->dimension);
 
 

@@ -19,7 +19,17 @@ public:
     ~TerrainDisplayTab();
 
  private:
-  Ui::TerrainDisplayTab *ui;
+    Ui::TerrainDisplayTab *ui;
+
+ public slots:
+    void setMode(bool);
+    void setTerrainHeight(int);
+    void setFixedTessellation(int);
+    void setAdaptTessellation(bool);
+    void setMinTessLevel(double);
+    void setMaxTessLevel(double);
+    void setMatImage(cv::Mat images);
+
 };
 
 

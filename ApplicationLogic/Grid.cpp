@@ -72,7 +72,7 @@ namespace TerrainDemo {
 //
 //        }
 
-            //generate required number of buffers for vertex positions
+        //generate required number of buffers for vertex positions
         glGenBuffers(NUM_BUFFERS, &vertexBuffers[0]);
 
 
@@ -83,7 +83,7 @@ namespace TerrainDemo {
         glBufferData(GL_ARRAY_BUFFER,gridSize* sizeof(positions[0]),&positions[0],GL_STATIC_DRAW);
 
 
-        //tell we have attribute 0
+        //enable we have attribute 0
         glEnableVertexAttribArray(0);
         //describe attrib 0
         glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,0);
@@ -94,7 +94,7 @@ namespace TerrainDemo {
 //    taking data from RAM to GPU
         glBufferData(GL_ARRAY_BUFFER,gridSize* sizeof(colors[0]),&colors[0],GL_STATIC_DRAW);
 
-//    tell we have attribute 1
+//    enable we have attribute 1
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1,4,GL_FLOAT,GL_FALSE,0,0);
 

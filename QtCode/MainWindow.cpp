@@ -16,11 +16,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     CoastLineTab* coastLineTab = new CoastLineTab();
     MountainTab* mountainTab = new MountainTab();
+    TerrainDisplayTab* terrainDisplayTab = new TerrainDisplayTab();
     ui->tabWidget->addTab(coastLineTab, "Coastline");
-    ui->tabWidget->addTab(mountainTab, "Mountain");
-    ui->tabWidget->addTab(new TerrainDisplayTab(), "CGCanvas");
+    ui->tabWidget->addTab(mountainTab, "Terrain");
+    ui->tabWidget->addTab(terrainDisplayTab, "CGCanvas");
 
     connect(coastLineTab, SIGNAL(coastlineImageChanged(cv::Mat)), mountainTab, SLOT(setChangedImage(cv::Mat)));
+    connect(mountainTab, SIGNAL(MountainImageChanged(cv::Mat)), terrainDisplayTab, SLOT(setMatImage(cv::Mat)));
 }
 
 MainWindow::~MainWindow()

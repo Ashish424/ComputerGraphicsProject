@@ -36,7 +36,7 @@ namespace TerrainDemo {
 
     //parsing the string for movement of the tutrle
     for(unsigned int i = 0;i<pattern.length();i++){
-      //TODO replace it with the general language for parsing stuff
+
       //Current language is
       //F: move forward a certain length (e.g. 10 pixels)
       //• +: turn left 30 degrees

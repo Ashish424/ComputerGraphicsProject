@@ -6,7 +6,7 @@
 #define CGPROJECT_GAMEOBJECT_H
 
 
-
+#include <qobject.h>
 #include "TransformData.hpp"
 #include "MainCamera.hpp"
 
@@ -18,7 +18,6 @@ namespace TerrainDemo {
 
     //base class for camera,lights and models
     class GameObject {
-
 
     public:
         //common constructors

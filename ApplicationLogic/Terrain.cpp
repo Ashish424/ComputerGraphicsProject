@@ -10,6 +10,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <ApplicationLogic/utils/InputManager.hpp>
 
 
 
@@ -35,7 +36,7 @@ namespace TerrainDemo {
 
                 //setup Opengl State
 
-            qDebug("value of dimension is %d",dimension);
+
                 glGenVertexArrays(1,&vertexArrayObject);
                 glBindVertexArray(vertexArrayObject);
                 //a patch of 4 vertices
@@ -53,9 +54,9 @@ namespace TerrainDemo {
 
 
     }
-    void Terrain::setDrawMode(const TerrainDrawMode &mode) {
+    void Terrain::setDrawMode(bool mode) {
 
-        drawMode = mode;
+        drawMode = (mode)?TerrainDrawMode::WIREFRAME:TerrainDrawMode::FILLED;
 
 
     }
@@ -78,9 +79,30 @@ void Terrain::DrawGameObject() {
 
         this->shader->Use();
         //TODO update geometry here
+        drawMode = InputManager::getCurrentUimode();
+        maxHeight = InputManager::getTerrainDepth();
+
+        MinTess = InputManager::getMinTessLevel();
+        MaxTess = InputManager::getMaxTesslevel();
+        FixedTess = InputManager::getFixedTessLevel();
+        isCameraBased = InputManager::getGetIsCam();
+
+
+
+
+
+
+
+
+
+
+
 
         std::string heightUniform("heightMapDisplacer");
+        qDebug("here height before height map updating");
         heightmap.Bind(this->shader,0,heightUniform,0);
+        updateHeightMap(InputManager::getHeightImage());
+
 
 
         std::string textureSampler0("textureSamplers[0]");
@@ -99,6 +121,7 @@ void Terrain::DrawGameObject() {
 
 
         this->updateTerrainShader(this);
+
          if(drawMode == TerrainDrawMode::WIREFRAME){
 
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -120,8 +143,30 @@ void Terrain::DrawGameObject() {
 
 void Terrain::updateHeightMap(const cv::Mat &updatedData) {
 
+
+    qDebug("updating terrain data");
+    heightmap.update(updatedData,0);
+
+
+
+
 }
 void Terrain::setMinMaxTesselationFactors(int MinTess, int MaxTess) {
+
+    this->MinTess = MinTess;
+    this->MaxTess = MaxTess;
+
+}
+
+
+
+
+
+void Terrain::updateHeightMapTexture(const cv::Mat &heightMap) {
+
+
+
+
 
 }
 }

@@ -33,7 +33,7 @@ class Ui_TerrainDisplayTab
 {
 public:
     QHBoxLayout *horizontalLayout;
-    QWidget *renderWidget;
+    CGCanvas *renderWidget;
     QVBoxLayout *verticalLayout_5;
     QFrame *sepLine;
     QToolBox *toolBox_5;
@@ -171,7 +171,6 @@ public:
         retranslateUi(TerrainDisplayTab);
 
         toolBox_5->setCurrentIndex(0);
-
 
         QMetaObject::connectSlotsByName(TerrainDisplayTab);
     } // setupUi

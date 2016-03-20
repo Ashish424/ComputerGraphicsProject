@@ -23,7 +23,6 @@ CGCanvas::CGCanvas(QWidget *parent):QOpenGLWidget(parent)
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(FixedUpdate()));
     timer->start(timestep);
     setFocusPolicy(Qt::FocusPolicy::ClickFocus);
-
 }
 
 CGCanvas::~CGCanvas()
@@ -171,4 +170,7 @@ void CGCanvas::mouseMoveEvent(QMouseEvent *ev) {
     InputManager::setMouseCoords(glm::vec2(ev->localPos().x(), ev->localPos().y()),glm::vec2(width(),height()));
 
 
+}
+TerrainDemo::Terrain *CGCanvas::getTerrain() {
+    return world->getCuurentTerrain();
 }

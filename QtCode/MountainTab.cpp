@@ -101,10 +101,12 @@ void MountainTab::applyChanges() {
     }
 
 
+    emit MountainImageChanged(output);
 
     cv::resize(output, output, cv::Size(outputHeight,outputWidth));
     QImage qimg((uchar*)output.data, output.cols, output.rows, output.step, QImage::Format_Grayscale8);
     ui->rasterLabel->setPixmap(QPixmap::fromImage(qimg));
+
 }
 
 void MountainTab::setSpinBox(int i) {

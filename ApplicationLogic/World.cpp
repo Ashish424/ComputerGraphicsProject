@@ -236,7 +236,7 @@ void World::putTerrain() {
     TransformData t1(pos, rot, scale);
 
 
-    std::string heightmapPath("./Assets/testHeightmapNew.png");
+    std::string heightmapPath("./Assets/testHeightmap.png");
     std::vector<std::string> textures;
     textures.push_back("./Assets/display/fungus.jpg");
     textures.push_back("./Assets/display/sand_grass_02.jpg");

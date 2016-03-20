@@ -14,6 +14,7 @@ namespace TerrainDemo {
     enum class TerrainDrawMode {WIREFRAME,FILLED };
     class Terrain : public Model {
 
+      void setDrawMode(bool mode);
 
     public:
       Terrain(const MainCamera *cam,
@@ -29,27 +30,39 @@ namespace TerrainDemo {
 
       //GUI event handlers
         void updateHeightMap(const cv::Mat &updatedData);
-        void setDrawMode(const TerrainDrawMode & mode);
+
         void setMinMaxTesselationFactors(int MinTess,int MaxTess);
 
     private:
         const glm::vec3 corner;
         GLuint dimension;
-        GLdouble maxHeight;
-        Textures heightmap;
+        GLdouble maxHeight = 10.0f;
+        float FixedTess = 1.0f;
+
+     public:
+      GLdouble getMaxHeight() const {
+          return maxHeight;
+      }
+      glm::vec2 getMinMaxLevel(){
+          return glm::vec2(MinTess,MaxTess);
+      }
+     private:
+      Textures heightmap;
         Textures textures;
+
         TerrainDrawMode drawMode;
+        int MinTess = 1,MaxTess = 10.0f;
+        float isCameraBased = 0.75;
         std::function<void(Terrain*)> updateTerrainShader;
 
 
 
-      //vector of vectors for terrain
-      std::vector< std::vector< glm::vec3> > VertexData;
-      std::vector< std::vector<glm::vec3> > FinalNormals;
 
+
+        void updateHeightMapTexture(const cv::Mat & heightMap);
 
         virtual void DrawGameObject() override;
-        virtual void InputUpdate() ;
+        virtual void InputUpdate();
 
 
 

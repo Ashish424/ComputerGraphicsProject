@@ -30,9 +30,9 @@ TerrainDemo::Shader::Shader(const std::vector<ShaderDefinition> & shaderIndexes,
     //link here
     glLinkProgram(programID);
     CheckShaderError(programID, GL_LINK_STATUS, true, "Error linking shader program");
-    //validate program
-    glValidateProgram(programID);
 
+
+    glValidateProgram(programID);
 
     for(unsigned int i = 0;i<uniforms.size();i++) {
         uniformsMap[uniforms[i]] = glGetUniformLocation(programID, uniforms[i].c_str());
@@ -41,6 +41,8 @@ TerrainDemo::Shader::Shader(const std::vector<ShaderDefinition> & shaderIndexes,
             printf("%u extraction error\n",uniformsMap[uniforms[i]]);
         }
     }
+
+
 
 
 

@@ -49,7 +49,12 @@ namespace TerrainDemo {
         float cameraMouseSensitivity = 0.05f;
         float cameraSpeed = 0.2f;
         glm::vec2 prevMousePos;
-        Terrain* cuurentTerrain;
+     public:
+      Terrain *getCuurentTerrain() const {
+          return cuurentTerrain;
+      }
+     private:
+      Terrain* cuurentTerrain;
 
 
 

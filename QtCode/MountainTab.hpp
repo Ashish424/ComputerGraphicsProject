@@ -22,6 +22,10 @@ public:
     ~MountainTab();
 public slots:
     void setChangedImage(cv::Mat mat);
+
+ signals:
+    void MountainImageChanged(cv::Mat mat);
+
 private:
     Ui::MountainTab *ui;
     std::vector<cv::Mat> images;

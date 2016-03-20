@@ -21,6 +21,7 @@ class CGCanvas : public QOpenGLWidget
 public:
     CGCanvas(QWidget *parent=0);
     ~CGCanvas();
+    TerrainDemo::Terrain* getTerrain();
 //    void printContextInformation();
 
     // QOpenGLWidget interface

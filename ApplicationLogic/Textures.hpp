@@ -36,6 +36,7 @@ namespace TerrainDemo {
 
         Textures(const std::vector<std::string> &texturePaths, bool isGreyScale = true);
         Textures(const std::string &texturePath, bool isGreyScale = true);
+        void update(cv::Mat src, int index);
     protected:
     private:
         Textures(const Textures &other) { }
