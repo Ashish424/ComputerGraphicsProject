@@ -1,4 +1,4 @@
-# ComputerGraphicsProject
+# Procedural generation of terrains and plants
 
 Screenshots:
 
